@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "table_game:block/small_game_table"
+    }
+  }
+}
