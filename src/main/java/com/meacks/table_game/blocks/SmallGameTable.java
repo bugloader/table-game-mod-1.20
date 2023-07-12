@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 
 public class SmallGameTable extends Block {
-    private static VoxelShape shape = Block.box(0, 7, 0, 16, 8, 16);
+    private static VoxelShape shape = Block.box(0, 7, 0, 16, 9, 16);
 
     public SmallGameTable(){
         super(Properties.of().mapColor(MapColor.WOOD).instabreak().instrument(NoteBlockInstrument.BASEDRUM));

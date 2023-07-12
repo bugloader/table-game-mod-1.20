@@ -3,6 +3,7 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'org.spongepowered.mixin' version '0.7.+'
 }
 
 version = mod_version
@@ -176,8 +177,19 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+    // Apply Mixin AP
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    //clientAnnotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    //apiAnnotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
+mixin {
+    // MixinGradle Settings
+    add sourceSets.main, 'mixins.mod.refmap.json'
+    config 'mixins.mod.json'
+    debug.verbose = true
+    debug.export = true
+}
 // This block of code expands all declared replace properties in the specified resource targets.
 // A missing property will result in an error. Properties are expanded using ${} Groovy notation.
 // When "copyIdeResources" is enabled, this will also run before the game launches in IDE environments.
