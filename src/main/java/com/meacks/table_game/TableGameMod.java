@@ -1,14 +1,19 @@
 package com.meacks.table_game;
 
+import com.meacks.table_game.handlers.BlockEntityHandler;
 import com.meacks.table_game.handlers.BlockHandler;
 import com.meacks.table_game.handlers.ItemHandler;
+import com.meacks.table_game.renderer.SmallGameTableRenderer;
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.multiplayer.ClientRegistryLayer;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterClientCommandsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -19,6 +24,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
@@ -35,6 +42,7 @@ public class TableGameMod {
             .icon(() -> EXAMPLE_ITEM.getDefaultInstance())
             .displayItems((parameters, output) -> {
                 output.accept(ItemHandler.small_game_table.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
+                output.accept(ItemHandler.uno_card.get());
             }).build());
 
     public TableGameMod()
@@ -48,6 +56,8 @@ public class TableGameMod {
         BlockHandler.BLOCK_DEFERRED_REGISTER.register(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered
         ItemHandler.ITEM_DEFERRED_REGISTER.register(modEventBus);
+
+        BlockEntityHandler.BLOCK_ENTITY_DEFERRED_REGISTER.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
         CREATIVE_MODE_TABS.register(modEventBus);
 
@@ -87,10 +97,13 @@ public class TableGameMod {
     public static class ClientModEvents
     {
         @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event)
-        {
-            // Some client setup code
+        public static void onClientSetup(FMLClientSetupEvent event) {
 
+        }
+
+        @SubscribeEvent
+        public static void onRegisterRenderers (EntityRenderersEvent.RegisterRenderers  event){
+            event.registerBlockEntityRenderer(BlockEntityHandler.smallGameTableBlockEntity.get(), SmallGameTableRenderer::new);
         }
     }
 }

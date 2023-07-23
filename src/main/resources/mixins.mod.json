@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "com.meacks.table_game.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "MixinsItemInHandRenderer"
+  ],
+  "injectors": {
+    "defaultRequire":1
+  },
+  "refmap": "mixins.mod-refmap.json"
+
+}
