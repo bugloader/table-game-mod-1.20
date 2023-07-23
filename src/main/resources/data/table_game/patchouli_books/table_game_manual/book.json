@@ -1,0 +1,7 @@
+{
+    "name": "桌游手册",
+    "landing_text": "不急，先来一局昆特牌",
+    "version": 1,
+    "creative_tab": "table_game:table_game_tab",
+    "use_resource_pack": true
+}
