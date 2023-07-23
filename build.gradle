@@ -4,6 +4,10 @@ plugins {
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id 'org.spongepowered.mixin' version '0.7.+'
+    // Adds the Kotlin Gradle plugin
+    id 'org.jetbrains.kotlin.jvm' version '1.9.0'
+    // OPTIONAL Kotlin Serialization plugin
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.0'
 }
 
 version = mod_version
@@ -153,6 +157,11 @@ repositories {
     // flatDir {
     //     dir 'libs'
     // }
+//    // Add KFF Maven repository
+//    maven {
+//        name = 'Kotlin for Forge'
+//        url = 'https://thedarkcolour.github.io/KotlinForForge/'
+//    }
 }
 
 dependencies {
@@ -181,6 +190,9 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     //clientAnnotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     //apiAnnotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+//    // Adds KFF as dependency and Kotlin libs
+//    implementation 'thedarkcolour:kotlinforforge:4.4.0'
 }
 
 mixin {
