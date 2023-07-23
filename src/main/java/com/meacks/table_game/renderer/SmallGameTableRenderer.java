@@ -28,6 +28,7 @@ import java.util.Deque;
 public class SmallGameTableRenderer implements BlockEntityRenderer<SmallGameTableBlockEntity> {
 
     private final BlockEntityRendererProvider.Context context;
+
     public SmallGameTableRenderer(BlockEntityRendererProvider.Context context) {
         this.context = context;
     }
@@ -51,11 +52,11 @@ public class SmallGameTableRenderer implements BlockEntityRenderer<SmallGameTabl
         poseStack.pushPose();
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
         ItemStack stack = new ItemStack(Items.DIAMOND);
-        BakedModel bakedmodel = itemRenderer.getModel(stack, null, null,0);
+        BakedModel bakedmodel = itemRenderer.getModel(stack, null, null, 0);
         poseStack.mulPose(Axis.XP.rotationDegrees(90f));
         poseStack.mulPose(Axis.YP.rotationDegrees(2f));
-        poseStack.translate(0.5,0.5,-0.5);
-        itemRenderer.render(stack, ItemDisplayContext.FIXED,true,poseStack,bufferSource,combinedLight,combinedOverlay,bakedmodel);
+        poseStack.translate(0.5, 0.5, -0.5);
+        itemRenderer.render(stack, ItemDisplayContext.FIXED, true, poseStack, bufferSource, combinedLight, combinedOverlay, bakedmodel);
         poseStack.popPose();
 
 

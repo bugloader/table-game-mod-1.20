@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 public class SmallGameTable extends BaseEntityBlock {
     private static VoxelShape shape = Block.box(0, 6, 0, 16, 8, 16);
 
-    public SmallGameTable(){
+    public SmallGameTable() {
         super(Properties.of().mapColor(MapColor.WOOD).instabreak().instrument(NoteBlockInstrument.BASEDRUM));
     }
 
@@ -37,7 +37,7 @@ public class SmallGameTable extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState blockState) {
-        return new SmallGameTableBlockEntity(pos,blockState);
+        return new SmallGameTableBlockEntity(pos, blockState);
     }
 
     @Nullable

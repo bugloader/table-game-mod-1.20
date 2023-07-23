@@ -22,14 +22,15 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
-
 @Mixin(ItemInHandRenderer.class)
 public abstract class MixinsItemInHandRenderer {
 
 
     @Final
-    @Shadow private Minecraft minecraft;
-    @Inject(at=@At(value="HEAD"),method = "Lnet/minecraft/client/renderer/ItemInHandRenderer;renderMap(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/item/ItemStack;)V")
+    @Shadow
+    private Minecraft minecraft;
+
+    @Inject(at = @At(value = "HEAD"), method = "Lnet/minecraft/client/renderer/ItemInHandRenderer;renderMap(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/item/ItemStack;)V")
     private void renderMap(PoseStack p_109367_, MultiBufferSource p_109368_, int p_109369_, ItemStack p_109370_, CallbackInfo ci) {
         ci.cancel();
         RenderType MAP_BACKGROUND = RenderType.text(new ResourceLocation("textures/map/map_background.png"));

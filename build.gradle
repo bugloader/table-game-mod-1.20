@@ -4,10 +4,6 @@ plugins {
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id 'org.spongepowered.mixin' version '0.7.+'
-    // Adds the Kotlin Gradle plugin
-    id 'org.jetbrains.kotlin.jvm' version '1.9.0'
-    // OPTIONAL Kotlin Serialization plugin
-    id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.0'
 }
 
 version = mod_version
@@ -157,11 +153,8 @@ repositories {
     // flatDir {
     //     dir 'libs'
     // }
-//    // Add KFF Maven repository
-//    maven {
-//        name = 'Kotlin for Forge'
-//        url = 'https://thedarkcolour.github.io/KotlinForForge/'
-//    }
+    // Add Patchouli Maven repository
+    maven { url 'https://maven.blamejared.com' }
 }
 
 dependencies {
@@ -191,8 +184,9 @@ dependencies {
     //clientAnnotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     //apiAnnotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-//    // Adds KFF as dependency and Kotlin libs
-//    implementation 'thedarkcolour:kotlinforforge:4.4.0'
+    // Adds Patchouli as dependency
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.20.1-81-FORGE:api")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.20.1-81-FORGE")
 }
 
 mixin {
@@ -208,11 +202,11 @@ mixin {
 // See https://docs.gradle.org/current/dsl/org.gradle.language.jvm.tasks.ProcessResources.html
 def resourceTargets = ['META-INF/mods.toml', 'pack.mcmeta']
 def replaceProperties = [
-        minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
-        forge_version: forge_version, forge_version_range: forge_version_range,
+        minecraft_version   : minecraft_version, minecraft_version_range: minecraft_version_range,
+        forge_version       : forge_version, forge_version_range: forge_version_range,
         loader_version_range: loader_version_range,
-        mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
-        mod_authors: mod_authors, mod_description: mod_description
+        mod_id              : mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
+        mod_authors         : mod_authors, mod_description: mod_description
 ]
 processResources {
     inputs.properties replaceProperties
