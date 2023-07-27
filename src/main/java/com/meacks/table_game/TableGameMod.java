@@ -1,9 +1,9 @@
 package com.meacks.table_game;
 
-import com.meacks.table_game.handlers.BlockEntityHandler;
-import com.meacks.table_game.handlers.BlockHandler;
-import com.meacks.table_game.handlers.ItemHandler;
-import com.meacks.table_game.renderer.SmallGameTableRenderer;
+import com.meacks.table_game.assets.handlers.BlockEntityHandler;
+import com.meacks.table_game.assets.handlers.BlockHandler;
+import com.meacks.table_game.assets.handlers.ItemHandler;
+import com.meacks.table_game.client.renderer.SmallGameTableRenderer;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.CreativeModeTab;

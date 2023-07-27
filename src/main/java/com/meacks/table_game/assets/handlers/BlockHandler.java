@@ -1,19 +1,14 @@
-package com.meacks.table_game.handlers;
+package com.meacks.table_game.assets.handlers;
 
 
 import com.meacks.table_game.TableGameMod;
-import com.meacks.table_game.blocks.SmallGameTable;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
+import com.meacks.table_game.assets.blocks.SmallGameTable;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Supplier;
 
 public class BlockHandler {
