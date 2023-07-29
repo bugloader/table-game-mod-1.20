@@ -71,14 +71,11 @@ public class MinoHandCard extends Item {
     public static String getCurrentCardName(ItemStack stack){
         return getCardName(getCurrentCardId(stack));
     }
-
-    public static String getCurrentCardPath(ItemStack stack){
-        return RESOURCE_PATH_ROOT+getCurrentCardName(stack)+".png";
-    }
-
+    public static String getCurrentCardPath(ItemStack stack){return RESOURCE_PATH_ROOT+getCurrentCardName(stack)+".png";}
     //functional methods
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
+    public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level,
+                                @NotNull List<Component> list, @NotNull TooltipFlag flag) {
         ArrayList<Integer> cardsList = basicCardList();
         CompoundTag nbt = stack.getTag();
         if (nbt == null){
@@ -121,7 +118,7 @@ public class MinoHandCard extends Item {
 
 
     @Override
-    public InteractionResult useOn(@NotNull UseOnContext useOnContext) {
+    public @NotNull InteractionResult useOn(@NotNull UseOnContext useOnContext) {
         BlockPos clickedBlockPos = useOnContext.getClickedPos();
         Level level = useOnContext.getLevel();
         Block clickedBlock = level.getBlockState(clickedBlockPos).getBlock();
@@ -137,7 +134,8 @@ public class MinoHandCard extends Item {
         return InteractionResult.SUCCESS;
     }
     @Override
-    public InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, InteractionHand interactionHand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player,
+                                                           @NotNull InteractionHand interactionHand) {
         ItemStack stack=player.getItemInHand(interactionHand);
         if(level.isClientSide) return InteractionResultHolder.success(stack);
         switchCard(stack,player.isShiftKeyDown());
