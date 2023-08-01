@@ -1,4 +1,6 @@
 package com.meacks.table_game.common.gameRules.mino;
 
-public enum MinoTriggers {
+import com.meacks.table_game.common.gameRules.IGameTriggers;
+
+public enum MinoTriggers implements IGameTriggers {
 }

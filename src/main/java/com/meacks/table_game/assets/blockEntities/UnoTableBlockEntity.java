@@ -17,12 +17,13 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.extensions.IForgeBlockEntity;
+import nl.erasmusmc.mgz.parallelstateless4j.configuration.MachineRegistry;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
 
-public class UnoTableBlockEntity  extends BlockEntity {
+public class UnoTableBlockEntity extends BlockEntity {
     /*
     random game number: number
     current round player id: id
