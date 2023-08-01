@@ -9,5 +9,4 @@ public class SmallGameTableBlockEntity extends BlockEntity {
     public SmallGameTableBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityHandler.smallGameTableBlockEntity.get(), pos, state);
     }
-
 }
