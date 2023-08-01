@@ -1,0 +1,6 @@
+{
+"parent": "item/generated",
+"textures": {
+"layer0": "table_game:item/mino/uno-creeper-2"
+}
+}

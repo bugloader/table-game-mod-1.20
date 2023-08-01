@@ -4,6 +4,8 @@ import com.meacks.table_game.assets.handlers.BlockEntityHandler;
 import com.meacks.table_game.assets.handlers.BlockHandler;
 import com.meacks.table_game.assets.handlers.ItemHandler;
 import com.meacks.table_game.client.renderer.SmallGameTableRenderer;
+import com.meacks.table_game.client.renderer.UnoTableExtenderRenderer;
+import com.meacks.table_game.client.renderer.UnoTableRenderer;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.CreativeModeTab;
@@ -39,6 +41,7 @@ public class TableGameMod {
             .displayItems((parameters, output) -> {
                 output.accept(ItemHandler.small_game_table.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
                 output.accept(ItemHandler.mino_hand_card.get());
+                output.accept(ItemHandler.uno_table.get());
             }).build());
 
     public TableGameMod()
@@ -51,6 +54,7 @@ public class TableGameMod {
         // Register the Deferred Register to the mod event bus so blocks get registered
         BlockHandler.BLOCK_DEFERRED_REGISTER.register(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered
+        ItemHandler.initialize();
         ItemHandler.ITEM_DEFERRED_REGISTER.register(modEventBus);
 
         BlockEntityHandler.BLOCK_ENTITY_DEFERRED_REGISTER.register(modEventBus);
@@ -100,6 +104,8 @@ public class TableGameMod {
         @SubscribeEvent
         public static void onRegisterRenderers (EntityRenderersEvent.RegisterRenderers  event){
             event.registerBlockEntityRenderer(BlockEntityHandler.smallGameTableBlockEntity.get(), SmallGameTableRenderer::new);
+            event.registerBlockEntityRenderer(BlockEntityHandler.unoTableBlockEntity.get(), UnoTableRenderer::new);
+            event.registerBlockEntityRenderer(BlockEntityHandler.unoTableExtenderBlockEntity.get(), UnoTableExtenderRenderer::new);
         }
     }
 }

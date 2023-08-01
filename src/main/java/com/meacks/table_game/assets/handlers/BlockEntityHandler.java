@@ -2,6 +2,8 @@ package com.meacks.table_game.assets.handlers;
 
 import com.meacks.table_game.TableGameMod;
 import com.meacks.table_game.assets.blockEntities.SmallGameTableBlockEntity;
+import com.meacks.table_game.assets.blockEntities.UnoTableBlockEntity;
+import com.meacks.table_game.assets.blockEntities.UnoTableExtenderBlockEntity;
 import com.mojang.datafixers.DSL;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -15,5 +17,12 @@ public class BlockEntityHandler {
     public static final RegistryObject<BlockEntityType<SmallGameTableBlockEntity>> smallGameTableBlockEntity =
             BLOCK_ENTITY_DEFERRED_REGISTER.register("small_game_table", () -> BlockEntityType.Builder.
                     of(SmallGameTableBlockEntity::new, BlockHandler.small_game_table.get()).build(DSL.remainderType()));
+
+    public static final RegistryObject<BlockEntityType<UnoTableBlockEntity>> unoTableBlockEntity =
+            BLOCK_ENTITY_DEFERRED_REGISTER.register("uno_table", () -> BlockEntityType.Builder.
+                    of(UnoTableBlockEntity::new, BlockHandler.uno_table.get()).build(DSL.remainderType()));
+    public static final RegistryObject<BlockEntityType<UnoTableExtenderBlockEntity>> unoTableExtenderBlockEntity =
+            BLOCK_ENTITY_DEFERRED_REGISTER.register("uno_table_extender", () -> BlockEntityType.Builder.
+                    of(UnoTableExtenderBlockEntity::new, BlockHandler.uno_table_extender.get()).build(DSL.remainderType()));
 
 }

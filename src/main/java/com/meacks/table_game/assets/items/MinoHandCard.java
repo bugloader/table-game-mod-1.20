@@ -1,5 +1,6 @@
 package com.meacks.table_game.assets.items;
 
+import com.meacks.table_game.assets.blockEntities.UnoTableBlockEntity;
 import com.meacks.table_game.assets.handlers.BlockHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -15,12 +16,12 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MinoHandCard extends Item {
 
@@ -32,7 +33,7 @@ public class MinoHandCard extends Item {
     public static final String[] COLORS = {"creeper","diamond","ocelot","redstone"};
     public static final String[] TYPES = {"draw2","reverse","skip"};
 
-    public static final int CARDS_COUNT = 55;
+    public static final int CARD_TYPES_COUNT = 55;
     public static String getCardName(int id){
         if(id==0)return "";
         if(id==1)return "-wild";
@@ -53,7 +54,7 @@ public class MinoHandCard extends Item {
         CompoundTag nbt = new CompoundTag();
         nbt.putInt("index",0);
         nbt.putBoolean("0",true);
-        for (int i = 1; i < CARDS_COUNT; i++) nbt.putBoolean(Integer.toString(i),false);
+        for (int i = 1; i < CARD_TYPES_COUNT; i++) nbt.putBoolean(Integer.toString(i),false);
         return nbt;
     }
 
@@ -62,7 +63,7 @@ public class MinoHandCard extends Item {
         CompoundTag nbt = stack.getTag();
         int id=0;
         if (nbt != null) {
-            for (int i = 1; i < CARDS_COUNT; i++) if(nbt.getBoolean(Integer.toString(i))) cardsList.add(i);
+            for (int i = 1; i < CARD_TYPES_COUNT; i++) if(nbt.getBoolean(Integer.toString(i))) cardsList.add(i);
             id = nbt.getInt("index");
         }
         stack.setTag(nbt);
@@ -83,7 +84,7 @@ public class MinoHandCard extends Item {
             stack.setTag(nbt);
         }
         int index=nbt.getInt("index");
-        for (int i = 1; i < CARDS_COUNT; i++) if(nbt.getBoolean(Integer.toString(i))) cardsList.add(i);
+        for (int i = 1; i < CARD_TYPES_COUNT; i++) if(nbt.getBoolean(Integer.toString(i))) cardsList.add(i);
         for (int i = 0;i < cardsList.size();i++) {
             if(i==index) list.add(Component.translatable(getCardName(cardsList.get(i))).withStyle(ChatFormatting.AQUA));
             else list.add(Component.translatable(getCardName(cardsList.get(i))));
@@ -98,12 +99,11 @@ public class MinoHandCard extends Item {
         else {
             int currentIndex = nbt.getInt("index");
             int counter=1;
-            for (int i = 1; i < CARDS_COUNT; i++) if(nbt.getBoolean(Integer.toString(i))) counter++;
+            for (int i = 1; i < CARD_TYPES_COUNT; i++) if(nbt.getBoolean(Integer.toString(i))) counter++;
             if(decrease) nbt.putInt("index",(currentIndex+counter-1)%counter);
             else nbt.putInt("index",(currentIndex+1)%counter);
         }
         stack.setTag(nbt);
-        System.out.println("1:"+getCurrentCardId(stack));
         stack.setHoverName(Component.translatable(getCurrentCardName(stack)));
     }
 
@@ -112,7 +112,7 @@ public class MinoHandCard extends Item {
     public void makeFullStackOfCard(ItemStack stack){
         CompoundTag nbt = stack.getTag();
         if (nbt == null) nbt = basicTag();
-        for (int i = 1; i < CARDS_COUNT; i++) nbt.putBoolean(Integer.toString(i),true);
+        for (int i = 1; i < CARD_TYPES_COUNT; i++) nbt.putBoolean(Integer.toString(i),true);
         stack.setTag(nbt);
     }
 
@@ -125,11 +125,10 @@ public class MinoHandCard extends Item {
         Player player = useOnContext.getPlayer();
         if(level.isClientSide) return InteractionResult.SUCCESS;
         if(player==null) return InteractionResult.PASS;
-        if(BlockHandler.areSameBlockType(clickedBlock,Blocks.AIR)){
-
-        } else if (BlockHandler.areSameBlockType(clickedBlock,BlockHandler.small_game_table.get())) {
+        if(BlockHandler.areSameBlockType(clickedBlock,BlockHandler.uno_table)){
+            ((UnoTableBlockEntity) Objects.requireNonNull(level.getBlockEntity(clickedBlockPos))).useCard(useOnContext);
+        } else if (BlockHandler.areSameBlockType(clickedBlock,BlockHandler.small_game_table)) {
             makeFullStackOfCard(useOnContext.getItemInHand());
-            System.out.println(2);
         }
         return InteractionResult.SUCCESS;
     }
@@ -139,7 +138,6 @@ public class MinoHandCard extends Item {
         ItemStack stack=player.getItemInHand(interactionHand);
         if(level.isClientSide) return InteractionResultHolder.success(stack);
         switchCard(stack,player.isShiftKeyDown());
-        System.out.println(1);
         return InteractionResultHolder.success(stack);
     }
 
