@@ -26,6 +26,7 @@ public class MinoTableBlockEntity extends BlockEntity {//GameTableBlockEntity<Mi
     current round player id: id
     current giving amount 1,2,4: cga
     direction +-1: dir
+
     state of action {0: no game yet,
                      1: giving cards,
                      2: placing card,
@@ -57,6 +58,19 @@ public class MinoTableBlockEntity extends BlockEntity {//GameTableBlockEntity<Mi
         tableNbt.putInt("numPlaced", 0);
         tableNbt.putInt("numGiven", 0);
         tableNbt.putInt("drawDeckNum", 108);
+        // will be true when click start
+        tableNbt.putBoolean("inGame", true);
+        // 0~9 be one set
+        tableNbt.putInt("numCreeperSet", 2);
+        tableNbt.putInt("numDiamondSet", 2);
+        tableNbt.putInt("numOcelotSet", 2);
+        tableNbt.putInt("numRedstoneSet", 2);
+        // 4 colors 1 each be one set
+        tableNbt.putInt("numSkipSet", 2);
+        tableNbt.putInt("numReverseSet", 2);
+        tableNbt.putInt("numDraw2Set", 2);
+        tableNbt.putInt("numDraw4Set", 1);
+        tableNbt.putInt("numWildSet", 1);
     }
 
     public void useCard(@NotNull UseOnContext useOnContext) {

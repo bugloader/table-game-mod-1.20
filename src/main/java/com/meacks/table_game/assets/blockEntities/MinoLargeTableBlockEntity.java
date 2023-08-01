@@ -47,9 +47,22 @@ public class MinoLargeTableBlockEntity extends BlockEntity {
 
     public void initialize(){
         CompoundTag tableNbt = getPersistentData();
-        tableNbt.putInt("numPlaced",0);
-        tableNbt.putInt("numGiven",0);
-        tableNbt.putInt("drawDeckNum",108);
+        tableNbt.putInt("numPlaced", 0);
+        tableNbt.putInt("numGiven", 0);
+        tableNbt.putInt("drawDeckNum", 108);
+        // will be true when click start
+        tableNbt.putBoolean("inGame", true);
+        // 0~9 be one set
+        tableNbt.putInt("numCreeperSet", 2);
+        tableNbt.putInt("numDiamondSet", 2);
+        tableNbt.putInt("numOcelotSet", 2);
+        tableNbt.putInt("numRedstoneSet", 2);
+        // 4 colors 1 each be one set
+        tableNbt.putInt("numSkipSet", 2);
+        tableNbt.putInt("numReverseSet", 2);
+        tableNbt.putInt("numDraw2Set", 2);
+        tableNbt.putInt("numDraw4Set", 1);
+        tableNbt.putInt("numWildSet", 1);
     }
     public void useCard(@NotNull UseOnContext useOnContext){
         Vec3 clickedPos = useOnContext.getClickLocation();
