@@ -1,7 +1,6 @@
 package com.meacks.table_game.assets.blocks;
 
-import com.meacks.table_game.assets.blockEntities.UnoTableBlockEntity;
-import com.meacks.table_game.assets.blockEntities.UnoTableExtenderBlockEntity;
+import com.meacks.table_game.assets.blockEntities.MinoTableExtenderBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.BlockGetter;
@@ -21,10 +20,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class UnoTableExtender   extends BaseEntityBlock {
+public class MinoTableExtender extends BaseEntityBlock {
         private static VoxelShape shape = Block.box(0, 14, 0, 16, 15, 16);
 
-        public UnoTableExtender() {
+        public MinoTableExtender() {
             super(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instabreak().instrument(NoteBlockInstrument.BELL));
         }
 
@@ -37,7 +36,7 @@ public class UnoTableExtender   extends BaseEntityBlock {
         @Nullable
         @Override
         public BlockEntity newBlockEntity(BlockPos pos, BlockState blockState) {
-            return new UnoTableExtenderBlockEntity(pos, blockState);
+            return new MinoTableExtenderBlockEntity(pos, blockState);
         }
 
         @Nullable

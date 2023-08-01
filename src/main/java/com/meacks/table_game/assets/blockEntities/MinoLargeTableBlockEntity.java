@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class UnoLargeTableBlockEntity extends BlockEntity {
+public class MinoLargeTableBlockEntity extends BlockEntity {
     /*
     random game number: number
     current round player id: id
@@ -36,8 +36,8 @@ public class UnoLargeTableBlockEntity extends BlockEntity {
     cards given: numGiven
     card stack: #s
      */
-    public UnoLargeTableBlockEntity(BlockPos pos, BlockState state) {
-        super(BlockEntityHandler.unoLargeTableBlockEntity.get(), pos, state);
+    public MinoLargeTableBlockEntity(BlockPos pos, BlockState state) {
+        super(BlockEntityHandler.minoLargeTableBlockEntity.get(), pos, state);
         initialize();
     }
 

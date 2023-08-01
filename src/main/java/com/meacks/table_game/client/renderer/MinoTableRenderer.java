@@ -1,6 +1,6 @@
 package com.meacks.table_game.client.renderer;
 
-import com.meacks.table_game.assets.blockEntities.UnoTableBlockEntity;
+import com.meacks.table_game.assets.blockEntities.MinoTableBlockEntity;
 import com.meacks.table_game.assets.handlers.ItemHandler;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -16,30 +16,30 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.meacks.table_game.client.renderer.CommonRenderingMethods.*;
 
-public class UnoTableRenderer implements BlockEntityRenderer<UnoTableBlockEntity> {
+public class MinoTableRenderer implements BlockEntityRenderer<MinoTableBlockEntity> {
 
     private final BlockEntityRendererProvider.Context context;
 
-    public UnoTableRenderer(BlockEntityRendererProvider.Context context) {
+    public MinoTableRenderer(BlockEntityRendererProvider.Context context) {
         this.context = context;
     }
 
     @Override
-    public boolean shouldRenderOffScreen(@NotNull UnoTableBlockEntity tileEntityIn) {
+    public boolean shouldRenderOffScreen(@NotNull MinoTableBlockEntity tileEntityIn) {
         return false;
     }
 
     public static final int RENDERING_CARD_NUM = 15;
 
     @Override
-    public void render(@NotNull UnoTableBlockEntity tileEntityIn, float partialTick, PoseStack poseStack,
+    public void render(@NotNull MinoTableBlockEntity tileEntityIn, float partialTick, PoseStack poseStack,
                        @NotNull MultiBufferSource bufferSource, int combinedLight, int combinedOverlay) {
 
         poseStack.pushPose();
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
         ItemStack stack;
-        if(tileEntityIn.getUpdateTag().getBoolean("inGame"))stack = new ItemStack(ItemHandler.uno_table.get());
-        else  stack = new ItemStack(ItemHandler.uno_table_yellow.get());
+        if(tileEntityIn.getUpdateTag().getBoolean("inGame"))stack = new ItemStack(ItemHandler.mino_table.get());
+        else  stack = new ItemStack(ItemHandler.mino_table_yellow.get());
         BakedModel bakedmodel = itemRenderer.getModel(stack, null, null, 0);
         poseStack.mulPose(Axis.YP.rotationDegrees(180f));
         poseStack.scale(2,2,2);

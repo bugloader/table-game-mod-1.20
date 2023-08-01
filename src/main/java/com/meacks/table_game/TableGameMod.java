@@ -3,14 +3,14 @@ package com.meacks.table_game;
 import com.meacks.table_game.assets.handlers.BlockEntityHandler;
 import com.meacks.table_game.assets.handlers.BlockHandler;
 import com.meacks.table_game.assets.handlers.ItemHandler;
-import com.meacks.table_game.client.renderer.UnoLargeTableRenderer;
-import com.meacks.table_game.client.renderer.UnoTableExtenderRenderer;
-import com.meacks.table_game.client.renderer.UnoTableRenderer;
+import com.meacks.table_game.client.renderer.MinoLargeTableRenderer;
+import com.meacks.table_game.client.renderer.MinoTableExtenderRenderer;
+import com.meacks.table_game.client.renderer.MinoTableRenderer;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -38,16 +38,15 @@ public class TableGameMod {
     private static final Logger LOGGER = LogUtils.getLogger();
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
-    public static final Item EXAMPLE_ITEM= Items.SNOWBALL;
 
-    public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("table_game_tab",
-            () -> CreativeModeTab.builder().withTabsBefore(CreativeModeTabs.COMBAT)
-                    .icon(EXAMPLE_ITEM::getDefaultInstance).displayItems((parameters, output) -> {
+    public static final RegistryObject<CreativeModeTab> TABLE_GAME_TAB = CREATIVE_MODE_TABS.register("table_game_tab",
+            () -> CreativeModeTab.builder().title(Component.translatable("itemGroup.table_game_tab"))
+                    .icon(Items.SNOWBALL::getDefaultInstance).displayItems((parameters, output) -> {
                 output.accept(ItemHandler.small_game_table.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
                 output.accept(ItemHandler.mino_hand_card.get());
-                output.accept(ItemHandler.uno_table.get());
-                output.accept(ItemHandler.uno_large_table.get());
-                output.accept(ItemHandler.uno_table_extender.get());
+                output.accept(ItemHandler.mino_table.get());
+                output.accept(ItemHandler.mino_large_table.get());
+                output.accept(ItemHandler.mino_table_extender.get());
             }).build());
 
     public TableGameMod()
@@ -108,9 +107,9 @@ public class TableGameMod {
 
         @SubscribeEvent
         public static void onRegisterRenderers (EntityRenderersEvent.RegisterRenderers  event){
-            event.registerBlockEntityRenderer(BlockEntityHandler.unoTableBlockEntity.get(), UnoTableRenderer::new);
-            event.registerBlockEntityRenderer(BlockEntityHandler.unoLargeTableBlockEntity.get(), UnoLargeTableRenderer::new);
-            event.registerBlockEntityRenderer(BlockEntityHandler.unoTableExtenderBlockEntity.get(), UnoTableExtenderRenderer::new);
+            event.registerBlockEntityRenderer(BlockEntityHandler.minoTableBlockEntity.get(), MinoTableRenderer::new);
+            event.registerBlockEntityRenderer(BlockEntityHandler.minoLargeTableBlockEntity.get(), MinoLargeTableRenderer::new);
+            event.registerBlockEntityRenderer(BlockEntityHandler.minoTableExtenderBlockEntity.get(), MinoTableExtenderRenderer::new);
         }
     }
 }

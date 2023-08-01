@@ -1,9 +1,8 @@
 package com.meacks.table_game.assets.items;
 
-import com.meacks.table_game.assets.blockEntities.UnoLargeTableBlockEntity;
-import com.meacks.table_game.assets.blockEntities.UnoTableBlockEntity;
+import com.meacks.table_game.assets.blockEntities.MinoLargeTableBlockEntity;
+import com.meacks.table_game.assets.blockEntities.MinoTableBlockEntity;
 import com.meacks.table_game.assets.handlers.BlockHandler;
-import com.meacks.table_game.assets.handlers.SoundHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -33,7 +32,7 @@ public class MinoHandCard extends Item {
         super(new Item.Properties().stacksTo(1));
     }
     //informational methods
-    public static final String RESOURCE_PATH_ROOT ="table_game:textures/item/mino/uno";
+    public static final String RESOURCE_PATH_ROOT ="table_game:textures/item/mino/mino";
     public static final String[] COLORS = {"creeper","diamond","ocelot","redstone"};
     public static final String[] TYPES = {"draw2","reverse","skip"};
 
@@ -129,21 +128,21 @@ public class MinoHandCard extends Item {
         Player player = useOnContext.getPlayer();
         if(level.isClientSide) return InteractionResult.SUCCESS;
         if(player==null) return InteractionResult.PASS;
-        if(BlockHandler.areSameBlockType(clickedBlock,BlockHandler.uno_table)){
-            ((UnoTableBlockEntity) Objects.requireNonNull(level.getBlockEntity(clickedBlockPos))).useCard(useOnContext);
-        } else if (BlockHandler.areSameBlockType(clickedBlock,BlockHandler.uno_large_table)){
-            ((UnoLargeTableBlockEntity) Objects.requireNonNull(level.getBlockEntity(clickedBlockPos))).useCard(useOnContext);
-        } else if(BlockHandler.areSameBlockType(clickedBlock,BlockHandler.uno_table_extender)){
+        if(BlockHandler.areSameBlockType(clickedBlock,BlockHandler.mino_table)){
+            ((MinoTableBlockEntity) Objects.requireNonNull(level.getBlockEntity(clickedBlockPos))).useCard(useOnContext);
+        } else if (BlockHandler.areSameBlockType(clickedBlock,BlockHandler.mino_large_table)){
+            ((MinoLargeTableBlockEntity) Objects.requireNonNull(level.getBlockEntity(clickedBlockPos))).useCard(useOnContext);
+        } else if(BlockHandler.areSameBlockType(clickedBlock,BlockHandler.mino_table_extender)){
             BlockPos[] tempPoses = {clickedBlockPos.east(),clickedBlockPos.west(),clickedBlockPos.south(),
                     clickedBlockPos.north(),clickedBlockPos.east().south(),clickedBlockPos.east().north(),
                     clickedBlockPos.west().south(),clickedBlockPos.west().north()};
             for (BlockPos tempPose : tempPoses) {
-                if (BlockHandler.areSameBlockType(level.getBlockState(tempPose).getBlock(), BlockHandler.uno_table)) {
-                    ((UnoTableBlockEntity) Objects.requireNonNull(level.getBlockEntity(tempPose))).useCard(useOnContext);
+                if (BlockHandler.areSameBlockType(level.getBlockState(tempPose).getBlock(), BlockHandler.mino_table)) {
+                    ((MinoTableBlockEntity) Objects.requireNonNull(level.getBlockEntity(tempPose))).useCard(useOnContext);
                     break;
                 }
-                if (BlockHandler.areSameBlockType(level.getBlockState(tempPose).getBlock(), BlockHandler.uno_large_table)) {
-                    ((UnoLargeTableBlockEntity) Objects.requireNonNull(level.getBlockEntity(tempPose))).useCard(useOnContext);
+                if (BlockHandler.areSameBlockType(level.getBlockState(tempPose).getBlock(), BlockHandler.mino_large_table)) {
+                    ((MinoLargeTableBlockEntity) Objects.requireNonNull(level.getBlockEntity(tempPose))).useCard(useOnContext);
                     break;
                 }
             }

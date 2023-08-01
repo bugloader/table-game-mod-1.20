@@ -21,11 +21,11 @@ public class ItemHandler {
     public static final DeferredRegister<Item> ITEM_DEFERRED_REGISTER =
             DeferredRegister.create(ForgeRegistries.ITEMS, TableGameMod.MODID);
     public static final RegistryObject<Item> small_game_table = blockItem(BlockHandler.small_game_table, "small_game_table");
-    public static final RegistryObject<Item> uno_table_yellow = blockItem(BlockHandler.uno_table_yellow, "uno_table_yellow");
-    public static final RegistryObject<Item> uno_large_table_yellow = blockItem(BlockHandler.uno_large_table_yellow, "uno_large_table_yellow");
-    public static final RegistryObject<Item> uno_table = blockItem(BlockHandler.uno_table, "uno_table");
-    public static final RegistryObject<Item> uno_large_table = blockItem(BlockHandler.uno_large_table, "uno_large_table");
-    public static final RegistryObject<Item> uno_table_extender = blockItem(BlockHandler.uno_table_extender, "uno_table_extender");
+    public static final RegistryObject<Item> mino_table_yellow = blockItem(BlockHandler.mino_table_yellow, "mino_table_yellow");
+    public static final RegistryObject<Item> mino_large_table_yellow = blockItem(BlockHandler.mino_large_table_yellow, "mino_large_table_yellow");
+    public static final RegistryObject<Item> mino_table = blockItem(BlockHandler.mino_table, "mino_table");
+    public static final RegistryObject<Item> mino_large_table = blockItem(BlockHandler.mino_large_table, "mino_large_table");
+    public static final RegistryObject<Item> mino_table_extender = blockItem(BlockHandler.mino_table_extender, "mino_table_extender");
     public static final RegistryObject<Item> mino_hand_card = item(MinoHandCard::new, "mino_hand_card");
     public static final List<RegistryObject<Item>> mino_card_shapes = new ArrayList<>();
 
@@ -39,7 +39,7 @@ public class ItemHandler {
     }
     public static void initialize(){
         for (int i = 0; i < CARD_TYPES_COUNT; i++) {
-            mino_card_shapes.add(item(CardShape::new, "uno"+getCardName(i)));
+            mino_card_shapes.add(item(CardShape::new, "mino"+getCardName(i)));
         }
     }
 

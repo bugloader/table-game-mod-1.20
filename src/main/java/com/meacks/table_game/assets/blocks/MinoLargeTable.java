@@ -1,7 +1,6 @@
 package com.meacks.table_game.assets.blocks;
 
-import com.meacks.table_game.assets.blockEntities.UnoLargeTableBlockEntity;
-import com.meacks.table_game.assets.blockEntities.UnoTableBlockEntity;
+import com.meacks.table_game.assets.blockEntities.MinoLargeTableBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.BlockGetter;
@@ -20,10 +19,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class UnoLargeTable extends BaseEntityBlock {
+public class MinoLargeTable extends BaseEntityBlock {
     private static VoxelShape shape = Block.box(0, 14, 0, 16, 15, 16);
 
-    public UnoLargeTable() {
+    public MinoLargeTable() {
         super(Properties.of().mapColor(MapColor.WOOD).instabreak().instrument(NoteBlockInstrument.BELL));
     }
 
@@ -36,7 +35,7 @@ public class UnoLargeTable extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState blockState) {
-        return new UnoLargeTableBlockEntity(pos, blockState);
+        return new MinoLargeTableBlockEntity(pos, blockState);
     }
 
     @Nullable

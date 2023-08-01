@@ -1,0 +1,8 @@
+{
+  "block.table_game.small_game_table": "Small Game Table",
+  "item.table_game.mino_hand_card":  "Mino Hand Card",
+  "block.table_game.mino_table": "Mino Table (2*2)",
+  "block.table_game.mino_large_table":  "Mino Large Table (3*3)",
+  "block.table_game.mino_table_extender": "Mino Table Extender",
+  "itemGroup.table_game_tab": "Table Game Collections"
+}
