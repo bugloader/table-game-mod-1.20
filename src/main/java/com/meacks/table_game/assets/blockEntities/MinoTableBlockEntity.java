@@ -2,9 +2,9 @@ package com.meacks.table_game.assets.blockEntities;
 
 import com.meacks.table_game.assets.handlers.BlockEntityHandler;
 import com.meacks.table_game.assets.items.MinoHandCard;
-import com.meacks.table_game.common.gameRules.mino.MinoGameRule;
-import com.meacks.table_game.common.gameRules.mino.MinoStates;
-import com.meacks.table_game.common.gameRules.mino.MinoTriggers;
+//import com.meacks.table_game.common.gameRules.mino.MinoGameRule;
+//import com.meacks.table_game.common.gameRules.mino.MinoStates;
+//import com.meacks.table_game.common.gameRules.mino.MinoTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class MinoTableBlockEntity extends GameTableBlockEntity<MinoStates, MinoTriggers, MinoGameRule> {
+public class MinoTableBlockEntity extends BlockEntity {//GameTableBlockEntity<MinoStates, MinoTriggers, MinoGameRule> {
     /*
     random game number: number
     current round player id: id
@@ -41,10 +41,10 @@ public class MinoTableBlockEntity extends GameTableBlockEntity<MinoStates, MinoT
      */
     public MinoTableBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityHandler.minoTableBlockEntity.get(), pos, state);
-        MinoGameRule rule = new MinoGameRule(
-                this::getState, this::setState, MinoGameRule.getConfigurer(), this
-        );
-        this.setGameRule(rule);
+//        MinoGameRule rule = new MinoGameRule(
+//                this::getState, this::setState, MinoGameRule.getConfigurer(), this
+//        );
+//        this.setGameRule(rule);
         initialize();
     }
 
@@ -96,6 +96,5 @@ public class MinoTableBlockEntity extends GameTableBlockEntity<MinoStates, MinoT
             this.load(compoundtag);
         }
     }
-
 
 }
