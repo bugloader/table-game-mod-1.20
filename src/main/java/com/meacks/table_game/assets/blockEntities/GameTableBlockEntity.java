@@ -3,23 +3,30 @@ package com.meacks.table_game.assets.blockEntities;
 import com.google.common.collect.Multimap;
 import static com.google.common.base.Preconditions.checkNotNull;
 import com.meacks.table_game.common.TriConsumer;
+import com.meacks.table_game.common.gameRules.AbstractGameRule;
 import com.meacks.table_game.common.gameRules.IGameStates;
 import com.meacks.table_game.common.gameRules.IGameTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import nl.erasmusmc.mgz.parallelstateless4j.IContextPropertyListener;
 import nl.erasmusmc.mgz.parallelstateless4j.IStateMachine;
 import nl.erasmusmc.mgz.parallelstateless4j.IStateMachineContext;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public abstract class GameTableBlockEntity<S extends IGameStates, T extends IGameTriggers> extends BlockEntity implements IStateMachineContext<S, T> {
+public abstract class GameTableBlockEntity<S extends IGameStates, T extends IGameTriggers, Rule extends AbstractGameRule<S, T>> extends BlockEntity implements IStateMachineContext<S, T> {
     protected IStateMachine<S, T> stateMachine;
     protected static final Map<Class<?>, TriConsumer<CompoundTag, String, Object>> TYPE_TO_PUT_FUNCTIONS_MAP;
+
+    protected Rule gameRule;
+
+    private S state;
 
     static {
         Map<Class<?>, TriConsumer<CompoundTag, String, Object>> setFunctions = new HashMap<>();
@@ -41,6 +48,27 @@ public abstract class GameTableBlockEntity<S extends IGameStates, T extends IGam
 
     public GameTableBlockEntity(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
         super(p_155228_, p_155229_, p_155230_);
+    }
+
+    protected void setGameRule(Rule rule) {
+        this.gameRule = rule;
+    }
+
+    public S getState() {
+        return this.state.fromValue(getPersistentData().getInt("gameState"));
+    }
+
+    public void setState(S state) {
+        this.state = state;
+        CompoundTag tableNbt = getPersistentData();
+        tableNbt.putInt("gameState", state.getValue());
+        saveAdditional(tableNbt);
+    }
+
+    protected void commitBlockUpdate(CompoundTag tableNbt, @NotNull UseOnContext useOnContext) {
+        saveAdditional(tableNbt);
+        BlockState blockState = getBlockState();
+        useOnContext.getLevel().sendBlockUpdated(this.getBlockPos(),blockState,blockState,2);
     }
 
     @Override
@@ -100,6 +128,4 @@ public abstract class GameTableBlockEntity<S extends IGameStates, T extends IGam
             throw new IllegalStateException("State machine is not of the expected type", e);
         }
     }
-
-
 }

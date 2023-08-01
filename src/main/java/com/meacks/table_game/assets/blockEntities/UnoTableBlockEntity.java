@@ -2,6 +2,9 @@ package com.meacks.table_game.assets.blockEntities;
 
 import com.meacks.table_game.assets.handlers.BlockEntityHandler;
 import com.meacks.table_game.assets.items.MinoHandCard;
+import com.meacks.table_game.common.gameRules.mino.MinoGameRule;
+import com.meacks.table_game.common.gameRules.mino.MinoStates;
+import com.meacks.table_game.common.gameRules.mino.MinoTriggers;
 import com.mojang.math.Axis;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 
-public class UnoTableBlockEntity extends BlockEntity {
+public class UnoTableBlockEntity extends GameTableBlockEntity<MinoStates, MinoTriggers, MinoGameRule> {
     /*
     random game number: number
     current round player id: id
@@ -44,20 +47,25 @@ public class UnoTableBlockEntity extends BlockEntity {
      */
     public UnoTableBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityHandler.unoTableBlockEntity.get(), pos, state);
+        MinoGameRule rule = new MinoGameRule(
+                this::getState, this::setState, MinoGameRule.getConfigurer(), this
+        );
+        this.setGameRule(rule);
         initialize();
     }
 
-    public boolean verifyCard(){
+    public boolean verifyCard() {
         return false;
     }
 
-    public void initialize(){
+    public void initialize() {
         CompoundTag tableNbt = getPersistentData();
-        tableNbt.putInt("numPlaced",0);
-        tableNbt.putInt("numGiven",0);
-        tableNbt.putInt("drawDeckNum",108);
+        tableNbt.putInt("numPlaced", 0);
+        tableNbt.putInt("numGiven", 0);
+        tableNbt.putInt("drawDeckNum", 108);
     }
-    public void useCard(@NotNull UseOnContext useOnContext){
+
+    public void useCard(@NotNull UseOnContext useOnContext) {
         Vec3 clickedPos = useOnContext.getClickLocation();
         //verify
 
@@ -65,15 +73,15 @@ public class UnoTableBlockEntity extends BlockEntity {
         int cardId = MinoHandCard.getCurrentCardId(useOnContext.getItemInHand());
         CompoundTag tableNbt = getPersistentData();
         int cardsPlacedNum = tableNbt.getInt("numPlaced");
-        tableNbt.putInt(Integer.toString(cardsPlacedNum),cardId);
-        tableNbt.putDouble(Integer.toString(cardsPlacedNum)+"x",clickedPos.get(Direction.Axis.X));
-        tableNbt.putDouble(Integer.toString(cardsPlacedNum)+"z",clickedPos.get(Direction.Axis.Z));
+        tableNbt.putInt(Integer.toString(cardsPlacedNum), cardId);
+        tableNbt.putDouble(Integer.toString(cardsPlacedNum) + "x", clickedPos.get(Direction.Axis.X));
+        tableNbt.putDouble(Integer.toString(cardsPlacedNum) + "z", clickedPos.get(Direction.Axis.Z));
         float degree = Objects.requireNonNull(useOnContext.getPlayer()).getViewYRot(0);
         tableNbt.putFloat(Integer.toString(cardsPlacedNum)+"r", degree);
         tableNbt.putInt("numPlaced",cardsPlacedNum+1);
         saveAdditional(tableNbt);
         BlockState blockState = getBlockState();
-        useOnContext.getLevel().sendBlockUpdated(this.getBlockPos(),blockState,blockState,2);
+        useOnContext.getLevel().sendBlockUpdated(this.getBlockPos(), blockState, blockState, 2);
     }
 
     @Override
