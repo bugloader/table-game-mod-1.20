@@ -3,7 +3,7 @@
   "package": "com.meacks.table_game.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "MixinsItemInHandRenderer"
+    "com.meacks.table_game.client.mixin.MixinsItemInHandRenderer"
   ],
   "injectors": {
     "defaultRequire":1

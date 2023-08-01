@@ -1,8 +1,7 @@
-package com.meacks.table_game.mixin;
+package com.meacks.table_game.client.mixin;
 
-import com.meacks.table_game.TableGameMod;
-import com.meacks.table_game.handlers.ItemHandler;
-import com.meacks.table_game.items.MinoHandCard;
+import com.meacks.table_game.assets.handlers.ItemHandler;
+import com.meacks.table_game.assets.items.MinoHandCard;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -19,7 +18,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;

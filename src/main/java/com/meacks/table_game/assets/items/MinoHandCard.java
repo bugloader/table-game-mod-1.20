@@ -1,6 +1,6 @@
-package com.meacks.table_game.items;
+package com.meacks.table_game.assets.items;
 
-import com.meacks.table_game.handlers.BlockHandler;
+import com.meacks.table_game.assets.handlers.BlockHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

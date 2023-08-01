@@ -1,7 +1,7 @@
-package com.meacks.table_game.handlers;
+package com.meacks.table_game.assets.handlers;
 
 import com.meacks.table_game.TableGameMod;
-import com.meacks.table_game.items.MinoHandCard;
+import com.meacks.table_game.assets.items.MinoHandCard;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -18,7 +18,7 @@ public class ItemHandler {
     public static final RegistryObject<Item> mino_hand_card = item(MinoHandCard::new, "mino_hand_card");
 
     public static RegistryObject<Item> blockItem(RegistryObject<Block> rBlock, String registryName) {
-        return ItemHandler.ITEM_DEFERRED_REGISTER.register(registryName,
+        return ITEM_DEFERRED_REGISTER.register(registryName,
                 () -> new BlockItem(rBlock.get(), new Item.Properties()));
     }
 
