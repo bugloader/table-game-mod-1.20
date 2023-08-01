@@ -22,6 +22,7 @@ public class ItemHandler {
             DeferredRegister.create(ForgeRegistries.ITEMS, TableGameMod.MODID);
     public static final RegistryObject<Item> small_game_table = blockItem(BlockHandler.small_game_table, "small_game_table");
     public static final RegistryObject<Item> uno_table = blockItem(BlockHandler.uno_table, "uno_table");
+    public static final RegistryObject<Item> uno_large_table = blockItem(BlockHandler.uno_large_table, "uno_large_table");
     public static final RegistryObject<Item> uno_table_extender = blockItem(BlockHandler.uno_table_extender, "uno_table_extender");
     public static final RegistryObject<Item> mino_hand_card = item(MinoHandCard::new, "mino_hand_card");
     public static final List<RegistryObject<Item>> mino_card_shapes = new ArrayList<>();

@@ -1,5 +1,6 @@
 package com.meacks.table_game.assets.items;
 
+import com.meacks.table_game.assets.blockEntities.UnoLargeTableBlockEntity;
 import com.meacks.table_game.assets.blockEntities.UnoTableBlockEntity;
 import com.meacks.table_game.assets.handlers.BlockHandler;
 import net.minecraft.ChatFormatting;
@@ -127,13 +128,19 @@ public class MinoHandCard extends Item {
         if(player==null) return InteractionResult.PASS;
         if(BlockHandler.areSameBlockType(clickedBlock,BlockHandler.uno_table)){
             ((UnoTableBlockEntity) Objects.requireNonNull(level.getBlockEntity(clickedBlockPos))).useCard(useOnContext);
-        }if(BlockHandler.areSameBlockType(clickedBlock,BlockHandler.uno_table_extender)){
+        } else if (BlockHandler.areSameBlockType(clickedBlock,BlockHandler.uno_large_table)){
+            ((UnoLargeTableBlockEntity) Objects.requireNonNull(level.getBlockEntity(clickedBlockPos))).useCard(useOnContext);
+        } else if(BlockHandler.areSameBlockType(clickedBlock,BlockHandler.uno_table_extender)){
             BlockPos[] tempPoses = {clickedBlockPos.east(),clickedBlockPos.west(),clickedBlockPos.south(),
                     clickedBlockPos.north(),clickedBlockPos.east().south(),clickedBlockPos.east().north(),
                     clickedBlockPos.west().south(),clickedBlockPos.west().north()};
             for (BlockPos tempPose : tempPoses) {
                 if (BlockHandler.areSameBlockType(level.getBlockState(tempPose).getBlock(), BlockHandler.uno_table)) {
                     ((UnoTableBlockEntity) Objects.requireNonNull(level.getBlockEntity(tempPose))).useCard(useOnContext);
+                    break;
+                }
+                if (BlockHandler.areSameBlockType(level.getBlockState(tempPose).getBlock(), BlockHandler.uno_large_table)) {
+                    ((UnoLargeTableBlockEntity) Objects.requireNonNull(level.getBlockEntity(tempPose))).useCard(useOnContext);
                     break;
                 }
             }

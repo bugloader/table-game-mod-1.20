@@ -1,40 +1,36 @@
 package com.meacks.table_game.client.renderer;
 
-import com.meacks.table_game.assets.blockEntities.SmallGameTableBlockEntity;
+import com.meacks.table_game.assets.blockEntities.UnoLargeTableBlockEntity;
 import com.meacks.table_game.assets.blockEntities.UnoTableBlockEntity;
 import com.meacks.table_game.assets.handlers.ItemHandler;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraftforge.client.model.data.ModelData;
 import org.jetbrains.annotations.NotNull;
 
-public class UnoTableRenderer implements BlockEntityRenderer<UnoTableBlockEntity> {
+public class UnoLargeTableRenderer implements BlockEntityRenderer<UnoLargeTableBlockEntity> {
 
     private final BlockEntityRendererProvider.Context context;
 
-    public UnoTableRenderer(BlockEntityRendererProvider.Context context) {
+    public UnoLargeTableRenderer(BlockEntityRendererProvider.Context context) {
         this.context = context;
     }
 
     @Override
-    public boolean shouldRenderOffScreen(@NotNull UnoTableBlockEntity tileEntityIn) {
+    public boolean shouldRenderOffScreen(@NotNull UnoLargeTableBlockEntity tileEntityIn) {
         return false;
     }
 
     public static final int RENDERING_CARD_NUM = 15;
-    public void renderingPlacedCards(@NotNull UnoTableBlockEntity tileEntityIn, PoseStack poseStack,
+    public void renderingPlacedCards(@NotNull UnoLargeTableBlockEntity tileEntityIn, PoseStack poseStack,
                                      MultiBufferSource bufferSource, ItemRenderer itemRenderer, int combinedLight,
                                      int combinedOverlay){
         CompoundTag tableNbt = tileEntityIn.getPersistentData();
@@ -57,7 +53,7 @@ public class UnoTableRenderer implements BlockEntityRenderer<UnoTableBlockEntity
         }
     }
 
-    public void renderingDeck(@NotNull UnoTableBlockEntity tileEntityIn, PoseStack poseStack,
+    public void renderingDeck(@NotNull UnoLargeTableBlockEntity tileEntityIn, PoseStack poseStack,
                                      MultiBufferSource bufferSource, ItemRenderer itemRenderer, int combinedLight,
                                      int combinedOverlay){
         CompoundTag tableNbt = tileEntityIn.getPersistentData();
@@ -83,7 +79,7 @@ public class UnoTableRenderer implements BlockEntityRenderer<UnoTableBlockEntity
         poseStack.popPose();
     }
 
-    public void renderingDepositDeck(@NotNull UnoTableBlockEntity tileEntityIn, PoseStack poseStack,
+    public void renderingDepositDeck(@NotNull UnoLargeTableBlockEntity tileEntityIn, PoseStack poseStack,
                               MultiBufferSource bufferSource, ItemRenderer itemRenderer, int combinedLight,
                               int combinedOverlay){
         CompoundTag tableNbt = tileEntityIn.getPersistentData();
@@ -111,15 +107,14 @@ public class UnoTableRenderer implements BlockEntityRenderer<UnoTableBlockEntity
     }
 
     @Override
-    public void render(@NotNull UnoTableBlockEntity tileEntityIn, float partialTick, PoseStack poseStack,
+    public void render(@NotNull UnoLargeTableBlockEntity tileEntityIn, float partialTick, PoseStack poseStack,
                        @NotNull MultiBufferSource bufferSource, int combinedLight, int combinedOverlay) {
-
         poseStack.pushPose();
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-        ItemStack stack = new ItemStack(ItemHandler.uno_table.get());
+        ItemStack stack = new ItemStack(ItemHandler.uno_large_table.get());
         BakedModel bakedmodel = itemRenderer.getModel(stack, null, null, 0);
         poseStack.mulPose(Axis.YP.rotationDegrees(180f));
-        poseStack.scale(2,2,2);
+        poseStack.scale(1,1,1);
         poseStack.translate(0.5, 0.25, -0.25);
         itemRenderer.render(stack, ItemDisplayContext.FIXED, true, poseStack, bufferSource, combinedLight,
                 combinedOverlay, bakedmodel);

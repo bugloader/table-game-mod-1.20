@@ -4,6 +4,7 @@ import com.meacks.table_game.assets.handlers.BlockEntityHandler;
 import com.meacks.table_game.assets.handlers.BlockHandler;
 import com.meacks.table_game.assets.handlers.ItemHandler;
 import com.meacks.table_game.client.renderer.SmallGameTableRenderer;
+import com.meacks.table_game.client.renderer.UnoLargeTableRenderer;
 import com.meacks.table_game.client.renderer.UnoTableExtenderRenderer;
 import com.meacks.table_game.client.renderer.UnoTableRenderer;
 import com.mojang.logging.LogUtils;
@@ -42,6 +43,8 @@ public class TableGameMod {
                 output.accept(ItemHandler.small_game_table.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
                 output.accept(ItemHandler.mino_hand_card.get());
                 output.accept(ItemHandler.uno_table.get());
+                output.accept(ItemHandler.uno_large_table.get());
+                output.accept(ItemHandler.uno_table_extender.get());
             }).build());
 
     public TableGameMod()
@@ -105,6 +108,7 @@ public class TableGameMod {
         public static void onRegisterRenderers (EntityRenderersEvent.RegisterRenderers  event){
             event.registerBlockEntityRenderer(BlockEntityHandler.smallGameTableBlockEntity.get(), SmallGameTableRenderer::new);
             event.registerBlockEntityRenderer(BlockEntityHandler.unoTableBlockEntity.get(), UnoTableRenderer::new);
+            event.registerBlockEntityRenderer(BlockEntityHandler.unoLargeTableBlockEntity.get(), UnoLargeTableRenderer::new);
             event.registerBlockEntityRenderer(BlockEntityHandler.unoTableExtenderBlockEntity.get(), UnoTableExtenderRenderer::new);
         }
     }

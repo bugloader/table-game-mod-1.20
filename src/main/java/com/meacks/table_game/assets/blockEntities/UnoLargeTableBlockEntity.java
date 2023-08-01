@@ -2,27 +2,22 @@ package com.meacks.table_game.assets.blockEntities;
 
 import com.meacks.table_game.assets.handlers.BlockEntityHandler;
 import com.meacks.table_game.assets.items.MinoHandCard;
-import com.mojang.math.Axis;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.extensions.IForgeBlockEntity;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
 import java.util.Objects;
 
-public class UnoTableBlockEntity  extends BlockEntity {
+public class UnoLargeTableBlockEntity extends BlockEntity {
     /*
     random game number: number
     current round player id: id
@@ -41,8 +36,8 @@ public class UnoTableBlockEntity  extends BlockEntity {
     cards given: numGiven
     card stack: #s
      */
-    public UnoTableBlockEntity(BlockPos pos, BlockState state) {
-        super(BlockEntityHandler.unoTableBlockEntity.get(), pos, state);
+    public UnoLargeTableBlockEntity(BlockPos pos, BlockState state) {
+        super(BlockEntityHandler.unoLargeTableBlockEntity.get(), pos, state);
         initialize();
     }
 
