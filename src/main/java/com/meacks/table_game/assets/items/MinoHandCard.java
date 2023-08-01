@@ -127,7 +127,17 @@ public class MinoHandCard extends Item {
         if(player==null) return InteractionResult.PASS;
         if(BlockHandler.areSameBlockType(clickedBlock,BlockHandler.uno_table)){
             ((UnoTableBlockEntity) Objects.requireNonNull(level.getBlockEntity(clickedBlockPos))).useCard(useOnContext);
-        } else if (BlockHandler.areSameBlockType(clickedBlock,BlockHandler.small_game_table)) {
+        }if(BlockHandler.areSameBlockType(clickedBlock,BlockHandler.uno_table_extender)){
+            BlockPos[] tempPoses = {clickedBlockPos.east(),clickedBlockPos.west(),clickedBlockPos.south(),
+                    clickedBlockPos.north(),clickedBlockPos.east().south(),clickedBlockPos.east().north(),
+                    clickedBlockPos.west().south(),clickedBlockPos.west().north()};
+            for (BlockPos tempPose : tempPoses) {
+                if (BlockHandler.areSameBlockType(level.getBlockState(tempPose).getBlock(), BlockHandler.uno_table)) {
+                    ((UnoTableBlockEntity) Objects.requireNonNull(level.getBlockEntity(tempPose))).useCard(useOnContext);
+                    break;
+                }
+            }
+        }else if (BlockHandler.areSameBlockType(clickedBlock,BlockHandler.small_game_table)) {
             makeFullStackOfCard(useOnContext.getItemInHand());
         }
         return InteractionResult.SUCCESS;
