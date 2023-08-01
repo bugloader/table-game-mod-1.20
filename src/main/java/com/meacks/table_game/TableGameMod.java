@@ -3,7 +3,6 @@ package com.meacks.table_game;
 import com.meacks.table_game.assets.handlers.BlockEntityHandler;
 import com.meacks.table_game.assets.handlers.BlockHandler;
 import com.meacks.table_game.assets.handlers.ItemHandler;
-import com.meacks.table_game.client.renderer.SmallGameTableRenderer;
 import com.meacks.table_game.client.renderer.UnoLargeTableRenderer;
 import com.meacks.table_game.client.renderer.UnoTableExtenderRenderer;
 import com.meacks.table_game.client.renderer.UnoTableRenderer;
@@ -28,18 +27,22 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
+import java.util.Random;
+
+import static com.meacks.table_game.assets.handlers.SoundHandler.SOUND_EVENT_DEFERRED_REGISTER;
+
 @Mod(TableGameMod.MODID)
 public class TableGameMod {
     public static final String MODID="table_game";
+    public static Random random = new Random();
     private static final Logger LOGGER = LogUtils.getLogger();
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
     public static final Item EXAMPLE_ITEM= Items.SNOWBALL;
 
-    public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("table_game_tab", () -> CreativeModeTab.builder()
-            .withTabsBefore(CreativeModeTabs.COMBAT)
-            .icon(() -> EXAMPLE_ITEM.getDefaultInstance())
-            .displayItems((parameters, output) -> {
+    public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("table_game_tab",
+            () -> CreativeModeTab.builder().withTabsBefore(CreativeModeTabs.COMBAT)
+                    .icon(EXAMPLE_ITEM::getDefaultInstance).displayItems((parameters, output) -> {
                 output.accept(ItemHandler.small_game_table.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
                 output.accept(ItemHandler.mino_hand_card.get());
                 output.accept(ItemHandler.uno_table.get());
@@ -50,7 +53,6 @@ public class TableGameMod {
     public TableGameMod()
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
@@ -63,8 +65,8 @@ public class TableGameMod {
         BlockEntityHandler.BLOCK_ENTITY_DEFERRED_REGISTER.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
         CREATIVE_MODE_TABS.register(modEventBus);
-
         // Register ourselves for server and other game events we are interested in
+        SOUND_EVENT_DEFERRED_REGISTER.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
 
         // Register the item to a creative tab
@@ -106,7 +108,6 @@ public class TableGameMod {
 
         @SubscribeEvent
         public static void onRegisterRenderers (EntityRenderersEvent.RegisterRenderers  event){
-            event.registerBlockEntityRenderer(BlockEntityHandler.smallGameTableBlockEntity.get(), SmallGameTableRenderer::new);
             event.registerBlockEntityRenderer(BlockEntityHandler.unoTableBlockEntity.get(), UnoTableRenderer::new);
             event.registerBlockEntityRenderer(BlockEntityHandler.unoLargeTableBlockEntity.get(), UnoLargeTableRenderer::new);
             event.registerBlockEntityRenderer(BlockEntityHandler.unoTableExtenderBlockEntity.get(), UnoTableExtenderRenderer::new);

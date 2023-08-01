@@ -1,6 +1,5 @@
 package com.meacks.table_game.assets.blocks;
 
-import com.meacks.table_game.assets.blockEntities.SmallGameTableBlockEntity;
 import com.meacks.table_game.assets.blockEntities.UnoTableBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

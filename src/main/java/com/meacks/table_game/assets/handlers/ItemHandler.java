@@ -21,6 +21,8 @@ public class ItemHandler {
     public static final DeferredRegister<Item> ITEM_DEFERRED_REGISTER =
             DeferredRegister.create(ForgeRegistries.ITEMS, TableGameMod.MODID);
     public static final RegistryObject<Item> small_game_table = blockItem(BlockHandler.small_game_table, "small_game_table");
+    public static final RegistryObject<Item> uno_table_yellow = blockItem(BlockHandler.uno_table_yellow, "uno_table_yellow");
+    public static final RegistryObject<Item> uno_large_table_yellow = blockItem(BlockHandler.uno_large_table_yellow, "uno_large_table_yellow");
     public static final RegistryObject<Item> uno_table = blockItem(BlockHandler.uno_table, "uno_table");
     public static final RegistryObject<Item> uno_large_table = blockItem(BlockHandler.uno_large_table, "uno_large_table");
     public static final RegistryObject<Item> uno_table_extender = blockItem(BlockHandler.uno_table_extender, "uno_table_extender");

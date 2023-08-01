@@ -1,7 +1,6 @@
 package com.meacks.table_game.assets.handlers;
 
 import com.meacks.table_game.TableGameMod;
-import com.meacks.table_game.assets.blockEntities.SmallGameTableBlockEntity;
 import com.meacks.table_game.assets.blockEntities.UnoLargeTableBlockEntity;
 import com.meacks.table_game.assets.blockEntities.UnoTableBlockEntity;
 import com.meacks.table_game.assets.blockEntities.UnoTableExtenderBlockEntity;
@@ -14,15 +13,9 @@ import net.minecraftforge.registries.RegistryObject;
 public class BlockEntityHandler {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_DEFERRED_REGISTER =
             DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, TableGameMod.MODID);
-
-    public static final RegistryObject<BlockEntityType<SmallGameTableBlockEntity>> smallGameTableBlockEntity =
-            BLOCK_ENTITY_DEFERRED_REGISTER.register("small_game_table", () -> BlockEntityType.Builder.
-                    of(SmallGameTableBlockEntity::new, BlockHandler.small_game_table.get()).build(DSL.remainderType()));
-
     public static final RegistryObject<BlockEntityType<UnoTableBlockEntity>> unoTableBlockEntity =
             BLOCK_ENTITY_DEFERRED_REGISTER.register("uno_table", () -> BlockEntityType.Builder.
                     of(UnoTableBlockEntity::new, BlockHandler.uno_table.get()).build(DSL.remainderType()));
-
     public static final RegistryObject<BlockEntityType<UnoLargeTableBlockEntity>> unoLargeTableBlockEntity =
             BLOCK_ENTITY_DEFERRED_REGISTER.register("uno_large_table", () -> BlockEntityType.Builder.
                     of(UnoLargeTableBlockEntity::new, BlockHandler.uno_large_table.get()).build(DSL.remainderType()));

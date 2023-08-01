@@ -64,8 +64,6 @@ public class UnoLargeTableBlockEntity extends BlockEntity {
         tableNbt.putDouble(Integer.toString(cardsPlacedNum)+"z",clickedPos.get(Direction.Axis.Z));
         float degree = Objects.requireNonNull(useOnContext.getPlayer()).getViewYRot(0);
         tableNbt.putFloat(Integer.toString(cardsPlacedNum)+"r", degree);
-        System.out.println(useOnContext.getPlayer().getViewXRot(0));
-        System.out.println(useOnContext.getPlayer().getViewYRot(0));
         tableNbt.putInt("numPlaced",cardsPlacedNum+1);
         saveAdditional(tableNbt);
         BlockState blockState = getBlockState();
@@ -75,14 +73,12 @@ public class UnoLargeTableBlockEntity extends BlockEntity {
 
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
-        System.out.println(1);
         return ClientboundBlockEntityDataPacket.create(this,BlockEntity::getPersistentData);
     }
 
     @Override
     public @NotNull CompoundTag getUpdateTag() {
         CompoundTag tag = new CompoundTag();
-        System.out.println(2);
         return this.getPersistentData();
     }
 

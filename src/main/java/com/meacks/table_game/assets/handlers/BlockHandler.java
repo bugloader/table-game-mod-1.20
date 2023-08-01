@@ -19,6 +19,8 @@ public class BlockHandler {
             DeferredRegister.create(ForgeRegistries.BLOCKS, TableGameMod.MODID);
 
     public static final RegistryObject<Block> small_game_table = block(SmallGameTable::new, "small_game_table");
+    public static final RegistryObject<Block> uno_table_yellow = block(SmallGameTable::new, "uno_table_yellow");
+    public static final RegistryObject<Block> uno_large_table_yellow = block(SmallGameTable::new, "uno_large_table_yellow");
     public static final RegistryObject<Block> uno_table = block(UnoTable::new, "uno_table");
     public static final RegistryObject<Block> uno_large_table = block(UnoLargeTable::new, "uno_large_table");
     public static final RegistryObject<Block> uno_table_extender = block(UnoTableExtender::new, "uno_table_extender");

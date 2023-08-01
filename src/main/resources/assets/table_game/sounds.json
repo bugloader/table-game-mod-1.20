@@ -1,0 +1,11 @@
+{
+  "shuffle": {
+    "subtitle": "table_game.subtitle.shuffle",
+    "sounds": [ "table_game:shuffle" ]
+  },
+  "play_card": {
+    "subtitle": "table_game.subtitle.play_card",
+    "sounds": [ "table_game:play_card" ]
+  }
+
+}

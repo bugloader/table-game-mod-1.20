@@ -1,6 +1,5 @@
 package com.meacks.table_game.assets.blocks;
 
-import com.meacks.table_game.assets.blockEntities.SmallGameTableBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.BlockGetter;
@@ -20,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 
-public class SmallGameTable extends BaseEntityBlock {
+public class SmallGameTable extends Block {
     private static VoxelShape shape = Block.box(0, 6, 0, 16, 8, 16);
 
     public SmallGameTable() {
@@ -31,23 +30,5 @@ public class SmallGameTable extends BaseEntityBlock {
     @SuppressWarnings("deprecation")
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos pos, CollisionContext collisionContext) {
         return shape;
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState blockState) {
-        return new SmallGameTableBlockEntity(pos, blockState);
-    }
-
-    @Nullable
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-        return super.getTicker(p_153212_, p_153213_, p_153214_);
-    }
-
-    @Nullable
-    @Override
-    public <T extends BlockEntity> GameEventListener getListener(ServerLevel p_221121_, T p_221122_) {
-        return super.getListener(p_221121_, p_221122_);
     }
 }

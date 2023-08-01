@@ -3,6 +3,7 @@ package com.meacks.table_game.assets.items;
 import com.meacks.table_game.assets.blockEntities.UnoLargeTableBlockEntity;
 import com.meacks.table_game.assets.blockEntities.UnoTableBlockEntity;
 import com.meacks.table_game.assets.handlers.BlockHandler;
+import com.meacks.table_game.assets.handlers.SoundHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -23,6 +24,8 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import static com.meacks.table_game.assets.handlers.EntityHandler.summonFireWork;
 
 public class MinoHandCard extends Item {
 
@@ -145,7 +148,9 @@ public class MinoHandCard extends Item {
                 }
             }
         }else if (BlockHandler.areSameBlockType(clickedBlock,BlockHandler.small_game_table)) {
-            makeFullStackOfCard(useOnContext.getItemInHand());
+            //makeFullStackOfCard(useOnContext.getItemInHand());
+            summonFireWork(useOnContext);
+            //SoundHandler.playSound(useOnContext,0);
         }
         return InteractionResult.SUCCESS;
     }
