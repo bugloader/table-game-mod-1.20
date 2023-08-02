@@ -24,13 +24,27 @@ public class SoundHandler {
     public static final RegistryObject<SoundEvent> play_card = SOUND_EVENT_DEFERRED_REGISTER.register("play_card",
             () -> SoundEvent.createFixedRangeEvent(new ResourceLocation(TableGameMod.MODID, "play_card"),16));
 
+    public static float[] soundVolume={
+            10,//0
+            6,//1
+            8,//2
+            0.3f,//3
+            1.5f,//4
+            10,//5
+            10,//6
+            10,//7
+            10,//8
+            5,//9
+    };
 
     public static void playSound(UseOnContext useOnContext, int soundType){
         Level level = useOnContext.getLevel();
-        Player player = useOnContext.getPlayer();
-            assert player != null;
-            BlockPos blockPos = useOnContext.getClickedPos();
-            SoundEvent[] soundEvents={
+        BlockPos blockPos = useOnContext.getClickedPos();
+        playSound(level,blockPos,soundType);
+    }
+
+    public static void playSound(Level level,BlockPos blockPos, int soundType){
+        SoundEvent[] soundEvents={
                 SoundEvents.EXPERIENCE_ORB_PICKUP,//0
                 SoundEvents.PLAYER_LEVELUP,//1
                 SoundEvents.ANVIL_FALL,//2
@@ -40,21 +54,11 @@ public class SoundHandler {
                 SoundEvents.VILLAGER_AMBIENT,//6
                 shuffle.get(),//7
                 play_card.get(),//8
+                SoundEvents.PORTAL_TRAVEL//9
         };
-
-        float[] soundVolume={
-                10,//0
-                6,//1
-                8,//2
-                0.3f,//3
-                1.5f,//4
-                10,//5
-                10,//6
-                10,//7
-                10,//8
-        };
-            publicPlaySound(level,soundEvents[soundType],blockPos,soundVolume[soundType]);
+        publicPlaySound(level,soundEvents[soundType],blockPos,soundVolume[soundType]);
     }
+
 
     public static void publicPlaySound(Level level,SoundEvent soundEvent,BlockPos blockPos,float volume){
         level.playSound(null, blockPos,soundEvent, SoundSource.PLAYERS, volume, 1f);

@@ -29,7 +29,7 @@ public class MinoLargeTableRenderer implements BlockEntityRenderer<MinoLargeTabl
         return false;
     }
 
-    public static final int RENDERING_CARD_NUM = 25;
+
     @Override
     public void render(@NotNull MinoLargeTableBlockEntity tileEntityIn, float partialTick, PoseStack poseStack,
                        @NotNull MultiBufferSource bufferSource, int combinedLight, int combinedOverlay) {
@@ -44,9 +44,11 @@ public class MinoLargeTableRenderer implements BlockEntityRenderer<MinoLargeTabl
         itemRenderer.render(stack, ItemDisplayContext.FIXED, true, poseStack, bufferSource, combinedLight,
                 combinedOverlay, bakedmodel);
         poseStack.popPose();
-        renderingPlacedCards(tileEntityIn,poseStack,bufferSource,itemRenderer,combinedLight,combinedOverlay,RENDERING_CARD_NUM);
+        renderingPlacedCards(tileEntityIn,poseStack,bufferSource,itemRenderer,combinedLight,combinedOverlay,
+                MinoLargeTableBlockEntity.RENDERING_CARD_NUM);
         renderingDeck(tileEntityIn,poseStack,bufferSource,itemRenderer,combinedLight,combinedOverlay);
-        renderingDepositDeck(tileEntityIn,poseStack,bufferSource,itemRenderer,combinedLight,combinedOverlay,RENDERING_CARD_NUM);
+        renderingDepositDeck(tileEntityIn,poseStack,bufferSource,itemRenderer,combinedLight,combinedOverlay,
+                MinoLargeTableBlockEntity.RENDERING_CARD_NUM);
     }
 
 }

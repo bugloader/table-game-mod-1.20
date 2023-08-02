@@ -3,6 +3,7 @@ package com.meacks.table_game.assets.items;
 import com.meacks.table_game.assets.blockEntities.MinoLargeTableBlockEntity;
 import com.meacks.table_game.assets.blockEntities.MinoTableBlockEntity;
 import com.meacks.table_game.assets.handlers.BlockHandler;
+import com.meacks.table_game.assets.handlers.ItemHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -13,6 +14,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -34,9 +36,26 @@ public class MinoHandCard extends Item {
     //informational methods
     public static final String RESOURCE_PATH_ROOT ="table_game:textures/item/mino/mino";
     public static final String[] COLORS = {"creeper","diamond","ocelot","redstone"};
-    public static final String[] TYPES = {"draw2","reverse","skip"};
+    public static final String[] EXTRA_TYPES = {"draw2","reverse","skip"};
 
     public static final int CARD_TYPES_COUNT = 55;
+
+    public ItemStack getOriginalInstance(){
+        return super.getDefaultInstance();
+    }
+    @Override
+    public @NotNull ItemStack getDefaultInstance(){
+        ItemStack stack = getOriginalInstance();
+        CompoundTag compoundTag = new CompoundTag();
+        compoundTag.putInt("peopleSize",4);
+        stack.setTag(compoundTag);
+        return stack;
+    }
+    public static ItemStack getBasicStack(){
+        ItemStack stack = ((MinoHandCard)ItemHandler.mino_hand_card.get()).getOriginalInstance();
+        stack.setTag(basicTag());
+        return stack;
+    }
     public static String getCardName(int id){
         if(id==0)return "";
         if(id==1)return "-wild";
@@ -44,7 +63,69 @@ public class MinoHandCard extends Item {
         int colorId=(id-3)/13;
         int typeId=(id-3)%13;
         if(typeId<10) return "-"+ COLORS[colorId]+'-'+Integer.toString(typeId);
-        return "-"+ COLORS[colorId]+'-'+TYPES[typeId-10];
+        return "-"+ COLORS[colorId]+'-'+EXTRA_TYPES[typeId-10];
+    }
+    //-3~-1: uno, wild, wild-draw4
+    //0~9
+    //10~12: draw2 reverse skip
+    public static int getCardType(int id){
+        if(id<3) return id-3;
+        return (id-3)%13;
+    }
+    //-1,0~3
+    public static int getCardColor(int id){
+        if(id<3) return -1;
+        return (id-3)/13;
+    }
+    //-3:0 uno
+    //-2:1 wild
+    //-1:2 wild-draw4
+    //0~9:3 digit
+    //10:4 draw2
+    //11:5 reverse
+    //12:6 skip
+    public static final int[] CATEGORY={0,1,2,3,3,3,3,3,3,3,3,3,3,4,5,6};
+    public static int getCardCategory(int id){
+        int type = getCardType(id);
+        return CATEGORY[type+3];
+    }
+
+    public static ItemStack popCard(@NotNull ItemStack stack){
+        CompoundTag nbt = stack.getTag();
+        assert nbt != null;
+        int id=getCurrentCardId(stack);
+        nbt.putInt(Integer.toString(id),nbt.getInt(Integer.toString(id))-1);
+        stack.setTag(nbt);
+        return stack;
+    }
+    public static int getRemainCardNum(@NotNull ItemStack stack) {
+        CompoundTag nbt = stack.getTag();
+        int num=0;
+        if (nbt == null){
+            nbt=basicTag();
+            stack.setTag(nbt);
+        }
+        int index=nbt.getInt("index");
+        for (int i = 1; i < CARD_TYPES_COUNT; i++) num+=nbt.getInt(Integer.toString(i));
+        return num;
+    }
+
+    public static boolean areSameColor(int id1,int id2){
+        return getCardColor(id1)==getCardColor(id2);
+    }
+
+    public static boolean areSameType(int id1,int id2){
+        return getCardType(id1)==getCardType(id2);
+    }
+
+    public static boolean containingColor(int clr,ItemStack stack){
+        CompoundTag nbt = stack.getTag();//(id-3)/13
+        assert nbt != null;
+        for (int i = clr*13+3; i < clr*13+16; i++) if(nbt.getInt(Integer.toString(i))!=0) return true;
+        return false;
+    }
+    public static boolean areSameCategory(int id1,int id2){
+        return getCardCategory(id1)==getCardCategory(id2);
     }
 
     public static ArrayList<Integer> basicCardList(){
@@ -56,8 +137,8 @@ public class MinoHandCard extends Item {
     public static CompoundTag basicTag(){
         CompoundTag nbt = new CompoundTag();
         nbt.putInt("index",0);
-        nbt.putBoolean("0",true);
-        for (int i = 1; i < CARD_TYPES_COUNT; i++) nbt.putBoolean(Integer.toString(i),false);
+        nbt.putInt("0",1);
+        for (int i = 1; i < CARD_TYPES_COUNT; i++) nbt.putInt(Integer.toString(i),0);
         return nbt;
     }
 
@@ -66,7 +147,7 @@ public class MinoHandCard extends Item {
         CompoundTag nbt = stack.getTag();
         int id=0;
         if (nbt != null) {
-            for (int i = 1; i < CARD_TYPES_COUNT; i++) if(nbt.getBoolean(Integer.toString(i))) cardsList.add(i);
+            for (int i = 1; i < CARD_TYPES_COUNT; i++) if(nbt.getInt(Integer.toString(i))!=0) cardsList.add(i);
             id = nbt.getInt("index");
         }
         stack.setTag(nbt);
@@ -87,7 +168,10 @@ public class MinoHandCard extends Item {
             stack.setTag(nbt);
         }
         int index=nbt.getInt("index");
-        for (int i = 1; i < CARD_TYPES_COUNT; i++) if(nbt.getBoolean(Integer.toString(i))) cardsList.add(i);
+        for (int i = 1; i < CARD_TYPES_COUNT; i++)
+            for (int j = 0; j < nbt.getInt(Integer.toString(i)) ; j++) {
+                cardsList.add(i);
+            }
         for (int i = 0;i < cardsList.size();i++) {
             if(i==index) list.add(Component.translatable(getCardName(cardsList.get(i))).withStyle(ChatFormatting.AQUA));
             else list.add(Component.translatable(getCardName(cardsList.get(i))));
@@ -102,7 +186,7 @@ public class MinoHandCard extends Item {
         else {
             int currentIndex = nbt.getInt("index");
             int counter=1;
-            for (int i = 1; i < CARD_TYPES_COUNT; i++) if(nbt.getBoolean(Integer.toString(i))) counter++;
+            for (int i = 1; i < CARD_TYPES_COUNT; i++) if(nbt.getInt(Integer.toString(i))!=0) counter++;
             if(decrease) nbt.putInt("index",(currentIndex+counter-1)%counter);
             else nbt.putInt("index",(currentIndex+1)%counter);
         }
@@ -115,7 +199,7 @@ public class MinoHandCard extends Item {
     public void makeFullStackOfCard(ItemStack stack){
         CompoundTag nbt = stack.getTag();
         if (nbt == null) nbt = basicTag();
-        for (int i = 1; i < CARD_TYPES_COUNT; i++) nbt.putBoolean(Integer.toString(i),true);
+        for (int i = 1; i < CARD_TYPES_COUNT; i++) nbt.putInt(Integer.toString(i),2);
         stack.setTag(nbt);
     }
 
@@ -126,29 +210,34 @@ public class MinoHandCard extends Item {
         Level level = useOnContext.getLevel();
         Block clickedBlock = level.getBlockState(clickedBlockPos).getBlock();
         Player player = useOnContext.getPlayer();
+        boolean placed=false;
         if(level.isClientSide) return InteractionResult.SUCCESS;
         if(player==null) return InteractionResult.PASS;
         if(BlockHandler.areSameBlockType(clickedBlock,BlockHandler.mino_table)){
-            ((MinoTableBlockEntity) Objects.requireNonNull(level.getBlockEntity(clickedBlockPos))).useCard(useOnContext);
+            placed=((MinoTableBlockEntity) Objects.requireNonNull(
+                    level.getBlockEntity(clickedBlockPos))).useCard(useOnContext);
         } else if (BlockHandler.areSameBlockType(clickedBlock,BlockHandler.mino_large_table)){
-            ((MinoLargeTableBlockEntity) Objects.requireNonNull(level.getBlockEntity(clickedBlockPos))).useCard(useOnContext);
+            placed=((MinoLargeTableBlockEntity)
+                    Objects.requireNonNull(level.getBlockEntity(clickedBlockPos))).useCard(useOnContext);
         } else if(BlockHandler.areSameBlockType(clickedBlock,BlockHandler.mino_table_extender)){
             BlockPos[] tempPoses = {clickedBlockPos.east(),clickedBlockPos.west(),clickedBlockPos.south(),
                     clickedBlockPos.north(),clickedBlockPos.east().south(),clickedBlockPos.east().north(),
                     clickedBlockPos.west().south(),clickedBlockPos.west().north()};
             for (BlockPos tempPose : tempPoses) {
                 if (BlockHandler.areSameBlockType(level.getBlockState(tempPose).getBlock(), BlockHandler.mino_table)) {
-                    ((MinoTableBlockEntity) Objects.requireNonNull(level.getBlockEntity(tempPose))).useCard(useOnContext);
+                    placed=((MinoTableBlockEntity) Objects.requireNonNull(
+                            level.getBlockEntity(tempPose))).useCard(useOnContext);
                     break;
                 }
                 if (BlockHandler.areSameBlockType(level.getBlockState(tempPose).getBlock(), BlockHandler.mino_large_table)) {
-                    ((MinoLargeTableBlockEntity) Objects.requireNonNull(level.getBlockEntity(tempPose))).useCard(useOnContext);
+                    placed=((MinoLargeTableBlockEntity)
+                            Objects.requireNonNull(level.getBlockEntity(tempPose))).useCard(useOnContext);
                     break;
                 }
             }
         }else if (BlockHandler.areSameBlockType(clickedBlock,BlockHandler.small_game_table)) {
             //makeFullStackOfCard(useOnContext.getItemInHand());
-            summonFireWork(useOnContext);
+            //summonFireWork(useOnContext);
             //SoundHandler.playSound(useOnContext,0);
         }
         return InteractionResult.SUCCESS;
