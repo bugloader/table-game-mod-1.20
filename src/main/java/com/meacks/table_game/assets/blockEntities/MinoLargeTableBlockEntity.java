@@ -64,6 +64,7 @@ public class MinoLargeTableBlockEntity extends BlockEntity {
         tableNbt.putInt("numDraw4Set", 1);
         tableNbt.putInt("numWildSet", 1);
     }
+
     public void useCard(@NotNull UseOnContext useOnContext){
         Vec3 clickedPos = useOnContext.getClickLocation();
         //verify
