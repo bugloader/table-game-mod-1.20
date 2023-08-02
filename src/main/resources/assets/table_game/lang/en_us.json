@@ -4,5 +4,7 @@
   "block.table_game.mino_table": "Mino Table (2*2)",
   "block.table_game.mino_large_table":  "Mino Large Table (3*3)",
   "block.table_game.mino_table_extender": "Mino Table Extender",
-  "itemGroup.table_game_tab": "Table Game Collections"
+  "itemGroup.table_game_tab": "Table Game Collections",
+  "container.mino_game_table": "Mino Game Deck Config",
+  "table_game.gui.mino_table.start": "Start Mino Game"
 }

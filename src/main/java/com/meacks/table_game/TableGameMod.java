@@ -1,12 +1,12 @@
 package com.meacks.table_game;
 
-import com.meacks.table_game.assets.handlers.BlockEntityHandler;
-import com.meacks.table_game.assets.handlers.BlockHandler;
-import com.meacks.table_game.assets.handlers.ItemHandler;
+import com.meacks.table_game.assets.handlers.*;
+import com.meacks.table_game.client.gui.MinoTableScreen;
 import com.meacks.table_game.client.renderer.MinoLargeTableRenderer;
 import com.meacks.table_game.client.renderer.MinoTableExtenderRenderer;
 import com.meacks.table_game.client.renderer.MinoTableRenderer;
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -27,30 +27,17 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
+import java.awt.*;
 import java.util.Random;
-
-import static com.meacks.table_game.assets.handlers.SoundHandler.SOUND_EVENT_DEFERRED_REGISTER;
 
 @Mod(TableGameMod.MODID)
 public class TableGameMod {
-    public static final String MODID="table_game";
+    public static final String MODID = "table_game";
     public static Random random = new Random();
     private static final Logger LOGGER = LogUtils.getLogger();
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
 
-    public static final RegistryObject<CreativeModeTab> TABLE_GAME_TAB = CREATIVE_MODE_TABS.register("table_game_tab",
-            () -> CreativeModeTab.builder().title(Component.translatable("itemGroup.table_game_tab"))
-                    .icon(Items.SNOWBALL::getDefaultInstance).displayItems((parameters, output) -> {
-                output.accept(ItemHandler.small_game_table.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
-                output.accept(ItemHandler.mino_hand_card.get());
-                output.accept(ItemHandler.mino_table.get());
-                output.accept(ItemHandler.mino_large_table.get());
-                output.accept(ItemHandler.mino_table_extender.get());
-            }).build());
-
-    public TableGameMod()
-    {
+    public TableGameMod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
@@ -63,50 +50,48 @@ public class TableGameMod {
 
         BlockEntityHandler.BLOCK_ENTITY_DEFERRED_REGISTER.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
-        CREATIVE_MODE_TABS.register(modEventBus);
+        CreativeTabHandler.CREATIVE_MODE_TABS.register(modEventBus);
         // Register ourselves for server and other game events we are interested in
-        SOUND_EVENT_DEFERRED_REGISTER.register(modEventBus);
+        SoundHandler.SOUND_EVENT_DEFERRED_REGISTER.register(modEventBus);
+        MenuHandler.MENU_DEFERRED_REGISTER.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
     }
 
-    private void commonSetup(final FMLCommonSetupEvent event)
-    {
+    private void commonSetup(final FMLCommonSetupEvent event) {
         // Some common setup code
         LOGGER.info("HELLO FROM table game SETUP");
     }
 
     // Add the example block item to the building blocks tab
-    private void addCreative(BuildCreativeModeTabContentsEvent event)
-    {
-        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
-        {
+    private void addCreative(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
 
         }
-            //event.accept(EXAMPLE_ITEM);
+        //event.accept(EXAMPLE_ITEM);
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event)
-    {
+    public void onServerStarting(ServerStartingEvent event) {
         // Do something when the server starts
 
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents
-    {
+    public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-
+            event.enqueueWork(
+                    () -> MenuScreens.register(MenuHandler.TABLE_GAME_MENU.get(), MinoTableScreen::new)
+            );
         }
 
         @SubscribeEvent
-        public static void onRegisterRenderers (EntityRenderersEvent.RegisterRenderers  event){
+        public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerBlockEntityRenderer(BlockEntityHandler.minoTableBlockEntity.get(), MinoTableRenderer::new);
             event.registerBlockEntityRenderer(BlockEntityHandler.minoLargeTableBlockEntity.get(), MinoLargeTableRenderer::new);
             event.registerBlockEntityRenderer(BlockEntityHandler.minoTableExtenderBlockEntity.get(), MinoTableExtenderRenderer::new);

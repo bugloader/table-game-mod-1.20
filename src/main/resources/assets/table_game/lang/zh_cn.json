@@ -4,5 +4,7 @@
   "block.table_game.mino_table": "Mino 游戏桌 (2*2)",
   "block.table_game.mino_large_table":  "Mino 大游戏桌 (3*3)",
   "block.table_game.mino_table_extender": "Mino 桌面",
-  "itemGroup.table_game_tab": "桌游工艺"
+  "itemGroup.table_game_tab": "桌游工艺",
+  "container.mino_game_table": "Mino 牌组配置",
+  "table_game.gui.mino_table.start": "开始游戏"
 }
