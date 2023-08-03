@@ -14,8 +14,8 @@ public class CreativeTabHandler {
 
     public static final RegistryObject<CreativeModeTab> TABLE_GAME_TAB = CREATIVE_MODE_TABS.register("table_game_tab",
             () -> CreativeModeTab.builder().title(Component.translatable("itemGroup.table_game_tab"))
-                    .icon(Items.SNOWBALL::getDefaultInstance).displayItems((parameters, output) -> {
-                output.accept(ItemHandler.small_game_table.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
+                    .icon(ItemHandler.mino_hand_card.get()::getDefaultInstance).displayItems((parameters, output) -> {
+                //output.accept(ItemHandler.small_game_table.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
                 output.accept(ItemHandler.mino_hand_card.get());
                 output.accept(ItemHandler.mino_table.get());
                 output.accept(ItemHandler.mino_large_table.get());

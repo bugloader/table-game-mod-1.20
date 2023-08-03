@@ -1,8 +1,15 @@
 package com.meacks.table_game.assets.handlers;
 
 import com.meacks.table_game.TableGameMod;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentUtils;
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -14,7 +21,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.Collection;
 import java.util.Random;
+import java.util.function.Function;
 
 public class SoundHandler {
     public static final DeferredRegister<SoundEvent> SOUND_EVENT_DEFERRED_REGISTER =
@@ -34,7 +43,8 @@ public class SoundHandler {
             10,//6
             10,//7
             10,//8
-            5,//9
+            0.3f,//9
+            5,
     };
 
     public static void playSound(UseOnContext useOnContext, int soundType){
@@ -54,15 +64,13 @@ public class SoundHandler {
                 SoundEvents.VILLAGER_AMBIENT,//6
                 shuffle.get(),//7
                 play_card.get(),//8
-                SoundEvents.PORTAL_TRAVEL//9
+                SoundEvents.PORTAL_TRAVEL,//9
+                SoundEvents.CAT_AMBIENT
         };
         publicPlaySound(level,soundEvents[soundType],blockPos,soundVolume[soundType]);
     }
 
-
     public static void publicPlaySound(Level level,SoundEvent soundEvent,BlockPos blockPos,float volume){
         level.playSound(null, blockPos,soundEvent, SoundSource.PLAYERS, volume, 1f);
     }
-
-
 }

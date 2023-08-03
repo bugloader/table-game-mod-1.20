@@ -26,9 +26,9 @@ public class CommonRenderingMethods {
         CompoundTag tableNbt = tileEntityIn.getPersistentData();
         int cardsPlacedNum = tableNbt.getInt("numPlaced");
         for (int i = Math.max(0,cardsPlacedNum-RENDERING_CARD_NUM); i < cardsPlacedNum; i++) {
-            double deltaX=tableNbt.getDouble(Integer.toString(i)+"x")-tileEntityIn.getBlockPos().getX();
-            double deltaZ=tableNbt.getDouble(Integer.toString(i)+"z")-tileEntityIn.getBlockPos().getZ();
-            float rotation = tableNbt.getFloat(Integer.toString(i)+"r");
+            double deltaX=tableNbt.getDouble(i +"x")-tileEntityIn.getBlockPos().getX();
+            double deltaZ=tableNbt.getDouble(i +"z")-tileEntityIn.getBlockPos().getZ();
+            float rotation = tableNbt.getFloat(i +"r");
             int id = tableNbt.getInt(Integer.toString(i));
             ItemStack stack = ItemHandler.mino_card_shapes.get(id).get().getDefaultInstance();
             if(i==cardsPlacedNum-1){
@@ -60,15 +60,15 @@ public class CommonRenderingMethods {
         CompoundTag tableNbt = tileEntityIn.getPersistentData();
         int deckNum = tableNbt.getInt("drawDeckNum");
         int cardsDrawNum = deckNum/10;
-        float topHeight = (deckNum%10)*0.0085f;
+        float topHeight = (deckNum%10)*0.008f;
         ItemStack stack = ItemHandler.mino_card_shapes.get(0).get().getDefaultInstance();
         BakedModel bakedmodel = itemRenderer.getModel(stack, null, null, 0);
         poseStack.pushPose();
         poseStack.mulPose(Axis.XP.rotationDegrees(90f));
-        poseStack.translate(-0.8f,1.2f,-0.95f);
+        poseStack.translate(-0.7f,1.2f,-0.94f);
         poseStack.scale(0.2f,0.2f,0.2f);
         for (int i = 0; i < cardsDrawNum; i++) {
-            poseStack.translate(0,0,-0.085f);
+            poseStack.translate(0,0,-0.08f);
             itemRenderer.render(stack, ItemDisplayContext.FIXED, true, poseStack, bufferSource, combinedLight,
                     combinedOverlay, bakedmodel);
         }
@@ -87,15 +87,15 @@ public class CommonRenderingMethods {
         int cardsPlacedNum = tableNbt.getInt("numPlaced");
         int depositNum = Math.max(0,cardsPlacedNum-RENDERING_CARD_NUM);
         int cardsDrawNum = depositNum/10;
-        float topHeight = (depositNum%10)*0.0085f;
+        float topHeight = (depositNum%10)*0.008f;
         ItemStack stack = ItemHandler.mino_card_shapes.get(0).get().getDefaultInstance();
         BakedModel bakedmodel = itemRenderer.getModel(stack, null, null, 0);
         poseStack.pushPose();
         poseStack.mulPose(Axis.XP.rotationDegrees(90f));
-        poseStack.translate(-0.8f,0.8f,-0.95f);
+        poseStack.translate(-0.7f,0.8f,-0.94f);
         poseStack.scale(0.2f,0.2f,0.2f);
         for (int i = 0; i < cardsDrawNum; i++) {
-            poseStack.translate(0,0,-0.085f);
+            poseStack.translate(0,0,-0.08f);
             itemRenderer.render(stack, ItemDisplayContext.FIXED, true, poseStack, bufferSource, combinedLight,
                     combinedOverlay, bakedmodel);
         }

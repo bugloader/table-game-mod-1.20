@@ -1,5 +1,6 @@
 package com.meacks.table_game.assets.blocks;
 
+import com.meacks.table_game.assets.blockEntities.MinoCommonBlockEntity;
 import com.meacks.table_game.assets.blockEntities.MinoTableBlockEntity;
 import com.meacks.table_game.assets.handlers.ItemHandler;
 import net.minecraft.core.BlockPos;
@@ -29,90 +30,12 @@ import org.jetbrains.annotations.Nullable;
 
 import static com.meacks.table_game.assets.items.MinoHandCard.getBasicStack;
 
-public class MinoTable extends BaseEntityBlock {
-    private static final VoxelShape shape = Block.box(0, 14, 0, 16, 15, 16);
-
-    public MinoTable() {
-        super(Properties.of().mapColor(MapColor.WOOD).instabreak().instrument(NoteBlockInstrument.BELL));
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter blockGetter, @NotNull BlockPos pos, @NotNull CollisionContext collisionContext) {
-        return shape;
-    }
+public class MinoTable extends MinoCommonTable{
+    public MinoTable() {super();}
 
     @Nullable
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState blockState) {
         return new MinoTableBlockEntity(pos, blockState);
     }
-
-    @Nullable
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level p_153212_, @NotNull BlockState p_153213_, @NotNull BlockEntityType<T> p_153214_) {
-        return super.getTicker(p_153212_, p_153213_, p_153214_);
-    }
-
-    @Nullable
-    @Override
-    public <T extends BlockEntity> GameEventListener getListener(@NotNull ServerLevel p_221121_, @NotNull T p_221122_) {
-        return super.getListener(p_221121_, p_221122_);
-    }
-
-    public static boolean changeColor(int clr, Level level, BlockPos blockPos) {
-        MinoTableBlockEntity entity = (MinoTableBlockEntity) level.getBlockEntity(blockPos);
-        assert entity != null;
-        return entity.changeColor(clr);
-    }
-
-    public static void getInitialCard(Player player, InteractionHand hand, Level level, BlockPos blockPos) {
-        NonNullList<ItemStack> itemStacks = player.getInventory().items;
-        if (level.isClientSide()) return;
-        for (ItemStack itemStack : itemStacks) if (itemStack.is(ItemHandler.mino_hand_card.get())) return;
-        MinoTableBlockEntity entity = (MinoTableBlockEntity) level.getBlockEntity(blockPos);
-        assert entity != null;
-        if (entity.shouldInitialGive()) {
-            ItemStack stack = entity.dealPlayerCards(7, getBasicStack());
-            stack = entity.signature(stack);
-            player.setItemInHand(hand, stack);
-        }
-    }
-
-    @SuppressWarnings("deprecation")
-    public @NotNull InteractionResult use(
-            @NotNull BlockState state,
-            @NotNull Level level,
-            @NotNull BlockPos pos,
-            @NotNull Player player,
-            @NotNull InteractionHand hand,
-            @NotNull BlockHitResult hit) {
-        if (level.isClientSide) {
-            return InteractionResult.SUCCESS;
-        } else {
-            if (player.isShiftKeyDown()) {
-                BlockEntity blockentity = level.getBlockEntity(pos);
-                if (blockentity instanceof MinoTableBlockEntity) {
-                    player.openMenu((MinoTableBlockEntity) blockentity);
-//                  player.awardStat(Stats.INSPECT_HOPPER);
-                }
-            } else {
-                ItemStack stack = player.getItemInHand(hand);
-                if (stack.is(Items.CREEPER_HEAD)) {//0
-                    if (changeColor(0, level, pos)) player.setItemInHand(hand, Items.AIR.getDefaultInstance());
-                } else if (stack.is(Items.ORANGE_DYE)) {//2
-                    if (changeColor(2, level, pos)) player.setItemInHand(hand, Items.AIR.getDefaultInstance());
-                } else if (stack.is(Items.REDSTONE)) {//3
-                    if (changeColor(3, level, pos)) player.setItemInHand(hand, Items.AIR.getDefaultInstance());
-                } else if (stack.is(Items.DIAMOND)) {//1
-                    if (changeColor(1, level, pos)) player.setItemInHand(hand, Items.AIR.getDefaultInstance());
-                } else if (stack.is(Items.AIR)) {
-                    getInitialCard(player, hand, level, pos);
-                }
-            }
-            return InteractionResult.CONSUME;
-        }
-
-    }
-
 }

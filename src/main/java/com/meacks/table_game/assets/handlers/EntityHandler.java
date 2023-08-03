@@ -36,7 +36,7 @@ public class EntityHandler {
       return result;
     }
 
-    public static final int[] LifeTimes = {25,30,40};
+    public static final int[] LifeTimes = {15,20,25};
     public static CompoundTag lifeTimeNBT(){
         CompoundTag nbt = new CompoundTag();
         nbt.putInt("LifeTime",LifeTimes[random.nextInt(0,3)]);
