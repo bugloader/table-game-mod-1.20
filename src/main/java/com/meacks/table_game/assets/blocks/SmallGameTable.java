@@ -23,10 +23,10 @@ public class SmallGameTable extends Block {
     
     @Override
     @SuppressWarnings("deprecation")
-    public @NotNull VoxelShape getShape(BlockState state,
-                                        BlockGetter blockGetter,
-                                        BlockPos pos,
-                                        CollisionContext collisionContext) {
+    public @NotNull VoxelShape getShape(@NotNull BlockState state,
+                                        @NotNull BlockGetter blockGetter,
+                                        @NotNull BlockPos pos,
+                                        @NotNull CollisionContext collisionContext) {
         return shape;
     }
 }

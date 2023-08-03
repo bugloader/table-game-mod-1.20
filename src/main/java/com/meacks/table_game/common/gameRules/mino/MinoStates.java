@@ -23,6 +23,7 @@ public enum MinoStates implements IGameStates {
     
     
     @Override
+    @SuppressWarnings("unchecked")
     public MinoStates fromValue(int value) {
         for (MinoStates state : MinoStates.values()) {
             if (state.value == value) {

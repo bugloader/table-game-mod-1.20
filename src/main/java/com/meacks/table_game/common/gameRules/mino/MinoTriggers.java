@@ -17,6 +17,8 @@ public enum MinoTriggers implements IGameTriggers {
         return value;
     }
     
+    @Override
+    @SuppressWarnings("unchecked")
     public MinoTriggers fromValue(int value) {
         for (MinoTriggers trigger : MinoTriggers.values()) {
             if (trigger.value == value) {

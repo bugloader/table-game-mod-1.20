@@ -18,8 +18,8 @@ public class MinoTableExtenderRenderer implements BlockEntityRenderer<MinoTableE
     @Override
     public void render(@NotNull MinoTableExtenderBlockEntity tileEntityIn,
                        float partialTick,
-                       PoseStack poseStack,
-                       MultiBufferSource bufferSource,
+                       @NotNull PoseStack poseStack,
+                       @NotNull MultiBufferSource bufferSource,
                        int combinedLight,
                        int combinedOverlay) {
         
