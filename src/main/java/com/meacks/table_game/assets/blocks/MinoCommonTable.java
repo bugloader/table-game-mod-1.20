@@ -113,15 +113,15 @@ public class MinoCommonTable extends BaseEntityBlock {
                 } else if (stack.is(Items.DIAMOND)) {//1
                     if (changeColor(1, level, pos)) player.setItemInHand(hand, Items.AIR.getDefaultInstance());
                 } else if (stack.is(Items.AIR)) {
-                    MinoCommonBlockEntity blockentity = (MinoCommonBlockEntity)level.getBlockEntity(pos);
-                    assert blockentity != null;
-                    if (blockentity.getPersistentData().getBoolean("inGame"))
+                    MinoCommonBlockEntity blockEntity = (MinoCommonBlockEntity)level.getBlockEntity(pos);
+                    assert blockEntity != null;
+                    if (blockEntity.getPersistentData().getBoolean("inGame"))
                         tryGetInitialCard(player, hand, level, pos);
-                    else player.openMenu((MinoCommonBlockEntity) blockentity);
+                    else player.openMenu(blockEntity);
 
                 }
             }
-            return InteractionResult.CONSUME;
+            return super.use(state,level,pos,player,hand,hit);
         }
 
     }

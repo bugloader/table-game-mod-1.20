@@ -564,6 +564,8 @@ public class MinoCommonBlockEntity extends BaseContainerBlockEntity implements C
                 tableNbt.putInt("action",8);
                 saveAdditional(tableNbt);
                 postBlockUpdate();
+
+                SoundHandler.playSound(useOnContext,0);
             }
         }else if(shouldCheckColor()){
             //System.out.println("should check clr");
@@ -575,10 +577,14 @@ public class MinoCommonBlockEntity extends BaseContainerBlockEntity implements C
                 switch (action){
                     case 6 ->{
                         tableNbt.putInt("action",1);
+
+                        SoundHandler.playSound(useOnContext,0);
                     }
                     case 7 ->{
                         tableNbt.putInt("id",tableNbt.getInt("preId"));
                         tableNbt.putInt("action",4);
+
+                        SoundHandler.playSound(useOnContext,2);
                     }
                 }
             }else{
@@ -586,9 +592,13 @@ public class MinoCommonBlockEntity extends BaseContainerBlockEntity implements C
                 switch (action){
                     case 6 ->{
                         newStack=dealPlayerCards(4,newStack);
+
+                        SoundHandler.playSound(useOnContext,0);
                     }
                     case 7 ->{
                         newStack=dealPlayerCards(6,newStack);
+
+                        SoundHandler.playSound(useOnContext,1);
                     }
                 }
                 tableNbt.putInt("action",2);
@@ -615,6 +625,8 @@ public class MinoCommonBlockEntity extends BaseContainerBlockEntity implements C
                 tableNbt.putInt("action",2);
                 saveAdditional(tableNbt);
                 postBlockUpdate();
+
+                SoundHandler.playSound(useOnContext,0);
             }
         }
         return true;
