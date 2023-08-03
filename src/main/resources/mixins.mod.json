@@ -8,6 +8,6 @@
   "injectors": {
     "defaultRequire":1
   },
-  "refmap": "mixins.mod-refmap.json"
+  "refmap": "mixins.mod.refmap.json"
 
 }
