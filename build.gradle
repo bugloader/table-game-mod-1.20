@@ -215,7 +215,7 @@ dependencies {
 mixin {
     // MixinGradle Settings
     add sourceSets.main, 'mixins.mod.refmap.json'
-    config 'mixins.mod.json'
+    config 'mixins.table_game.json'
     debug.verbose = true
     debug.export = true
 }
