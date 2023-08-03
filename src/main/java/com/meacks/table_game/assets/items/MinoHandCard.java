@@ -94,7 +94,7 @@ public class MinoHandCard extends Item {
         int id=getCurrentCardId(stack);
         nbt.putInt(Integer.toString(id),nbt.getInt(Integer.toString(id))-1);
         stack.setTag(nbt);
-        stack.setHoverName(Component.translatable(getCurrentCardName(stack)+", id:"+ nbt.getInt("id")));
+        stack.setHoverName(Component.translatable(getCurrentCardName(stack)+", player:"+ nbt.getInt("id")));
         return stack;
     }
     public static int getRemainCardNum(@NotNull ItemStack stack) {

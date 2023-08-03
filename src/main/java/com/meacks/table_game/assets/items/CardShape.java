@@ -1,5 +1,6 @@
 package com.meacks.table_game.assets.items;
 
+import com.meacks.table_game.assets.handlers.ItemHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -22,7 +23,7 @@ public class CardShape extends Item {
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level,
                                 @NotNull List<Component> list, @NotNull TooltipFlag flag) {
-        if(MinoHandCard.getCurrentCardId(stack)!=0) {
+        if(!stack.is(ItemHandler.mino_card_shapes.get(0).get())) {
             CompoundTag nbt = stack.getOrCreateTag();
             list.add(Component.translatable("Won from game: " + Integer.toHexString(nbt.getInt("pwd"))));
             list.add(Component.translatable("at time: " +
