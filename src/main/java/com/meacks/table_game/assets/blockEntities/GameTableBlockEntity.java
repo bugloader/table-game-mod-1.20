@@ -125,6 +125,7 @@ public abstract class GameTableBlockEntity<S extends IGameStates, T extends IGam
     }
     
     @Override
+    @SuppressWarnings("unchecked")
     public <R extends IStateMachine<S, T>> R getStateMachine() {
         try {
             return (R) this.stateMachine;

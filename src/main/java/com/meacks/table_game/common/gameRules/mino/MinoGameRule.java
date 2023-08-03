@@ -20,7 +20,7 @@ public class MinoGameRule extends AbstractGameRule<MinoStates, MinoTriggers> {
     }
     
     public static MachineConfigurer<MinoStates, MinoTriggers> getConfigurer() {
-        MachineConfigurer<MinoStates, MinoTriggers> configurer = new MachineConfigurer<>();
+        var configurer = new MachineConfigurer<MinoStates, MinoTriggers>();
         for (MinoStates state : MinoStates.values()) {
             configurer.configure(state);
         }

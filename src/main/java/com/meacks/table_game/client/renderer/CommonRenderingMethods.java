@@ -82,15 +82,38 @@ public class CommonRenderingMethods {
                                      int combinedOverlay) {
         CompoundTag tableNbt = tileEntityIn.getPersistentData();
         int deckNum = tableNbt.getInt("drawDeckNum");
-        int cardsDrawNum = deckNum / 10;
-        float topHeight = (deckNum % 10) * 0.008f;
+        renderingTableCardStack(deckNum,
+                                poseStack,
+                                bufferSource,
+                                itemRenderer,
+                                combinedLight,
+                                combinedOverlay,
+                                10,
+                                -0.7f,
+                                1.2f,
+                                -0.94f);
+    }
+    
+    public static void renderingTableCardStack(int cardsPlacedNum,
+                                               PoseStack poseStack,
+                                               MultiBufferSource bufferSource,
+                                               ItemRenderer itemRenderer,
+                                               int combinedLight,
+                                               int combinedOverlay,
+                                               int RENDERING_CARD_NUM,
+                                               float translateX,
+                                               float translateY,
+                                               float translateZ) {
+        int depositNum = Math.max(0, cardsPlacedNum - RENDERING_CARD_NUM);
+        int cardsDrawNum = depositNum / 10;
+        float topHeight = (depositNum % 10) * 0.008f;
         ItemStack stack = ItemHandler.mino_card_shapes.get(0)
                                                       .get()
                                                       .getDefaultInstance();
         BakedModel bakedmodel = itemRenderer.getModel(stack, null, null, 0);
         poseStack.pushPose();
         poseStack.mulPose(Axis.XP.rotationDegrees(90f));
-        poseStack.translate(-0.7f, 1.2f, -0.94f);
+        poseStack.translate(translateX, translateY, translateZ);
         poseStack.scale(0.2f, 0.2f, 0.2f);
         for (int i = 0; i < cardsDrawNum; i++) {
             poseStack.translate(0, 0, -0.08f);
@@ -126,39 +149,15 @@ public class CommonRenderingMethods {
                                             int RENDERING_CARD_NUM) {
         CompoundTag tableNbt = tileEntityIn.getPersistentData();
         int cardsPlacedNum = tableNbt.getInt("numPlaced");
-        int depositNum = Math.max(0, cardsPlacedNum - RENDERING_CARD_NUM);
-        int cardsDrawNum = depositNum / 10;
-        float topHeight = (depositNum % 10) * 0.008f;
-        ItemStack stack = ItemHandler.mino_card_shapes.get(0)
-                                                      .get()
-                                                      .getDefaultInstance();
-        BakedModel bakedmodel = itemRenderer.getModel(stack, null, null, 0);
-        poseStack.pushPose();
-        poseStack.mulPose(Axis.XP.rotationDegrees(90f));
-        poseStack.translate(-0.7f, 0.8f, -0.94f);
-        poseStack.scale(0.2f, 0.2f, 0.2f);
-        for (int i = 0; i < cardsDrawNum; i++) {
-            poseStack.translate(0, 0, -0.08f);
-            itemRenderer.render(stack,
-                                ItemDisplayContext.FIXED,
-                                true,
+        renderingTableCardStack(cardsPlacedNum,
                                 poseStack,
                                 bufferSource,
+                                itemRenderer,
                                 combinedLight,
                                 combinedOverlay,
-                                bakedmodel);
-        }
-        if (topHeight != 0) {
-            poseStack.translate(0, 0, -topHeight);
-            itemRenderer.render(stack,
-                                ItemDisplayContext.FIXED,
-                                true,
-                                poseStack,
-                                bufferSource,
-                                combinedLight,
-                                combinedOverlay,
-                                bakedmodel);
-        }
-        poseStack.popPose();
+                                RENDERING_CARD_NUM,
+                                -0.7f,
+                                0.8f,
+                                -0.94f);
     }
 }

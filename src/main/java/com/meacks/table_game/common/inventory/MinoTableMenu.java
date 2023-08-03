@@ -41,10 +41,10 @@ public class MinoTableMenu extends AbstractContainerMenu {
     }
     
     public @NotNull ItemStack quickMoveStack(@NotNull Player player, int slot_id) {
-        ItemStack itemstack = ItemStack.EMPTY;
+        var itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(slot_id);
         if (slot.hasItem()) {
-            ItemStack itemstack1 = slot.getItem();
+            var itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
             if (slot_id < this.minoTable.getContainerSize()) {
                 if (!this.moveItemStackTo(itemstack1, this.minoTable.getContainerSize(), this.slots.size(), true)) {

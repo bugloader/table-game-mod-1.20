@@ -37,24 +37,25 @@ public class MinoTableExtender extends BaseEntityBlock {
     
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState blockState) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState blockState) {
         return new MinoTableExtenderBlockEntity(pos, blockState);
     }
     
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_,
-                                                                  BlockState p_153213_,
-                                                                  BlockEntityType<T> p_153214_) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level p_153212_,
+                                                                  @NotNull BlockState p_153213_,
+                                                                  @NotNull BlockEntityType<T> p_153214_) {
         return super.getTicker(p_153212_, p_153213_, p_153214_);
     }
     
     @Nullable
     @Override
-    public <T extends BlockEntity> GameEventListener getListener(ServerLevel p_221121_, T p_221122_) {
+    public <T extends BlockEntity> GameEventListener getListener(@NotNull ServerLevel p_221121_, @NotNull T p_221122_) {
         return super.getListener(p_221121_, p_221122_);
     }
     
+    @SuppressWarnings("deprecation")
     public @NotNull InteractionResult use(@NotNull BlockState state,
                                           @NotNull Level level,
                                           @NotNull BlockPos pos,
@@ -82,10 +83,10 @@ public class MinoTableExtender extends BaseEntityBlock {
     
     @Override
     @SuppressWarnings("deprecation")
-    public @NotNull VoxelShape getShape(BlockState state,
-                                        BlockGetter blockGetter,
-                                        BlockPos pos,
-                                        CollisionContext collisionContext) {
+    public @NotNull VoxelShape getShape(@NotNull BlockState state,
+                                        @NotNull BlockGetter blockGetter,
+                                        @NotNull BlockPos pos,
+                                        @NotNull CollisionContext collisionContext) {
         return shape;
     }
 }

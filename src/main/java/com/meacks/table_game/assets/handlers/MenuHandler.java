@@ -16,7 +16,7 @@ public class MenuHandler {
     public static final RegistryObject<MenuType<MinoTableMenu>> TABLE_GAME_MENU =
         MENU_DEFERRED_REGISTER.register(
             "mino_table_menu",
-            () -> new MenuType(MinoTableMenu::new, FeatureFlags.DEFAULT_FLAGS));
+            () -> new MenuType<>(MinoTableMenu::new, FeatureFlags.DEFAULT_FLAGS));
     
     
 }
