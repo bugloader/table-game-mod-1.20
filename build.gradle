@@ -243,6 +243,8 @@ processResources {
 // Example for how to get properties into the manifest for reading at runtime.
 jar {
     archiveClassifier = 'slim'
+    enabled = false
+    dependsOn(shadowJar {})
     manifest {
         attributes([
                 "Specification-Title"     : mod_id,
@@ -285,16 +287,20 @@ shadowJar {
     exclude 'uml/**'
 }
 
-assemble.dependsOn shadowJar
-
 reobf {
     shadowJar {}
+}
+
+reobf {
+    jar {
+        enabled = false
+    }
 }
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact jar
+            artifact shadowJar
         }
     }
     repositories {

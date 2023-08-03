@@ -8,25 +8,27 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import org.jetbrains.annotations.NotNull;
 
 public class MinoTableExtenderRenderer implements BlockEntityRenderer<MinoTableExtenderBlockEntity> {
-
+    
     private final BlockEntityRendererProvider.Context context;
-
+    
     public MinoTableExtenderRenderer(BlockEntityRendererProvider.Context context) {
         this.context = context;
     }
-
+    
+    @Override
+    public void render(@NotNull MinoTableExtenderBlockEntity tileEntityIn,
+                       float partialTick,
+                       PoseStack poseStack,
+                       MultiBufferSource bufferSource,
+                       int combinedLight,
+                       int combinedOverlay) {
+        
+        
+    }
+    
     @Override
     public boolean shouldRenderOffScreen(@NotNull MinoTableExtenderBlockEntity tileEntityIn) {
         return false;
     }
-
-    @Override
-    public void render(@NotNull MinoTableExtenderBlockEntity tileEntityIn, float partialTick, PoseStack poseStack,
-                       MultiBufferSource bufferSource, int combinedLight, int combinedOverlay) {
-
-
-
-
-    }
-
+    
 }

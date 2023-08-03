@@ -32,76 +32,46 @@ import static com.meacks.table_game.assets.items.MinoHandCard.getBasicStack;
 
 public class MinoCommonTable extends BaseEntityBlock {
     private static final VoxelShape shape = Block.box(0, 14, 0, 16, 15, 16);
-
+    
     public MinoCommonTable() {
-        super(Properties.copy(Blocks.SPRUCE_WOOD).mapColor(MapColor.WOOD).instabreak().instrument(NoteBlockInstrument.BELL));
+        super(Properties.copy(Blocks.SPRUCE_WOOD)
+                        .mapColor(MapColor.WOOD)
+                        .instabreak()
+                        .instrument(NoteBlockInstrument.BELL));
     }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter blockGetter, @NotNull BlockPos pos, @NotNull CollisionContext collisionContext) {
-        return shape;
-    }
-
+    
     @Nullable
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState blockState) {
         return null;
     }
-
+    
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level p_153212_, @NotNull BlockState p_153213_, @NotNull BlockEntityType<T> p_153214_) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level p_153212_,
+                                                                  @NotNull BlockState p_153213_,
+                                                                  @NotNull BlockEntityType<T> p_153214_) {
         return super.getTicker(p_153212_, p_153213_, p_153214_);
     }
-
+    
     @Nullable
     @Override
     public <T extends BlockEntity> GameEventListener getListener(@NotNull ServerLevel p_221121_, @NotNull T p_221122_) {
         return super.getListener(p_221121_, p_221122_);
     }
-
-    public static boolean changeColor(int clr, Level level, BlockPos blockPos) {
-        MinoCommonBlockEntity entity = (MinoCommonBlockEntity) level.getBlockEntity(blockPos);
-        assert entity != null;
-        return entity.changeColor(clr);
-    }
-
-    public static void tryGetInitialCard(Player player, InteractionHand hand, Level level, BlockPos blockPos) {
-        NonNullList<ItemStack> itemStacks = player.getInventory().items;
-        if (level.isClientSide()) return;
-        for (ItemStack itemStack : itemStacks) if (itemStack.is(ItemHandler.mino_hand_card.get())) return;
-        MinoCommonBlockEntity entity = (MinoCommonBlockEntity) level.getBlockEntity(blockPos);
-        assert entity != null;
-        if (entity.stepInitialGive()) {
-            ItemStack stack = entity.dealPlayerCards(7, getBasicStack());
-            stack = entity.signature(stack);
-            player.setItemInHand(hand, stack);
-        }
-    }
-
-    public static void tryStartGame(Level level, BlockPos blockPos) {
-        if (level.isClientSide()) return;
-        MinoCommonBlockEntity entity = (MinoCommonBlockEntity) level.getBlockEntity(blockPos);
-        assert entity != null;
-        if (entity.shouldGameInitialize()) {
-            entity.gameInitialize();
-        }
-    }
-
+    
     @SuppressWarnings("deprecation")
-    public @NotNull InteractionResult use(
-            @NotNull BlockState state,
-            @NotNull Level level,
-            @NotNull BlockPos pos,
-            @NotNull Player player,
-            @NotNull InteractionHand hand,
-            @NotNull BlockHitResult hit) {
+    public @NotNull InteractionResult use(@NotNull BlockState state,
+                                          @NotNull Level level,
+                                          @NotNull BlockPos pos,
+                                          @NotNull Player player,
+                                          @NotNull InteractionHand hand,
+                                          @NotNull BlockHitResult hit) {
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         } else {
             if (player.isShiftKeyDown()) {
-                tryStartGame(level,pos);
+                tryStartGame(level, pos);
             } else {
                 ItemStack stack = player.getItemInHand(hand);
                 if (stack.is(Items.CREEPER_HEAD)) {//0
@@ -113,17 +83,61 @@ public class MinoCommonTable extends BaseEntityBlock {
                 } else if (stack.is(Items.DIAMOND)) {//1
                     if (changeColor(1, level, pos)) player.setItemInHand(hand, Items.AIR.getDefaultInstance());
                 } else if (stack.is(Items.AIR)) {
-                    MinoCommonBlockEntity blockEntity = (MinoCommonBlockEntity)level.getBlockEntity(pos);
+                    MinoCommonBlockEntity blockEntity = (MinoCommonBlockEntity) level.getBlockEntity(pos);
                     assert blockEntity != null;
-                    if (blockEntity.getPersistentData().getBoolean("inGame"))
+                    if (blockEntity.getPersistentData()
+                                   .getBoolean("inGame")) {
                         tryGetInitialCard(player, hand, level, pos);
-                    else player.openMenu(blockEntity);
-
+                    } else {
+                        player.openMenu(blockEntity);
+                    }
+                    
                 }
             }
-            return super.use(state,level,pos,player,hand,hit);
+            return super.use(state, level, pos, player, hand, hit);
         }
-
+        
     }
-
+    
+    @Override
+    @SuppressWarnings("deprecation")
+    public @NotNull VoxelShape getShape(@NotNull BlockState state,
+                                        @NotNull BlockGetter blockGetter,
+                                        @NotNull BlockPos pos,
+                                        @NotNull CollisionContext collisionContext) {
+        return shape;
+    }
+    
+    public static void tryStartGame(Level level, BlockPos blockPos) {
+        if (level.isClientSide()) return;
+        MinoCommonBlockEntity entity = (MinoCommonBlockEntity) level.getBlockEntity(blockPos);
+        assert entity != null;
+        if (entity.shouldGameInitialize()) {
+            entity.gameInitialize();
+        }
+    }
+    
+    public static boolean changeColor(int clr, Level level, BlockPos blockPos) {
+        MinoCommonBlockEntity entity = (MinoCommonBlockEntity) level.getBlockEntity(blockPos);
+        assert entity != null;
+        return entity.changeColor(clr);
+    }
+    
+    public static void tryGetInitialCard(Player player, InteractionHand hand, Level level, BlockPos blockPos) {
+        NonNullList<ItemStack> itemStacks = player.getInventory().items;
+        if (level.isClientSide()) return;
+        for (ItemStack itemStack : itemStacks) {
+            if (itemStack.is(ItemHandler.mino_hand_card.get())) {
+                return;
+            }
+        }
+        MinoCommonBlockEntity entity = (MinoCommonBlockEntity) level.getBlockEntity(blockPos);
+        assert entity != null;
+        if (entity.stepInitialGive()) {
+            ItemStack stack = entity.dealPlayerCards(7, getBasicStack());
+            stack = entity.signature(stack);
+            player.setItemInHand(hand, stack);
+        }
+    }
+    
 }

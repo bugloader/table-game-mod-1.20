@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class MinoLargeTable extends MinoCommonTable {
     public MinoLargeTable() {super();}
-
+    
     @Nullable
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState blockState) {

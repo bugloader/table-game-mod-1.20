@@ -9,5 +9,5 @@ public class MinoTableExtenderBlockEntity extends BlockEntity {
     public MinoTableExtenderBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityHandler.minoTableExtenderBlockEntity.get(), pos, state);
     }
-
+    
 }
