@@ -418,24 +418,15 @@ public class MinoCommonBlockEntity extends BaseContainerBlockEntity implements C
             return false;
         }
         if (!validId(stack)) {
-            //System.out.println("invalid id");
-            if (validCallUno(stack)) {
-                callUno(useOnContext);
-                //System.out.println("called uno");
-            } else if (validCatchUno(stack)) {
-                missUnoPenalize();
-                //System.out.println("caught missed uno");
-            }
+            if (validCallUno(stack)) callUno(useOnContext);
+            else if (validCatchUno(stack)) missUnoPenalize();
             return false;
         }
         if (validCatchUno(stack)) {
             missUnoPenalize();
-            //System.out.println("caught missed uno");
             return false;
         }
         if (shouldDeal()) {
-            //System.out.println("should deal");
-            //System.out.println(action);
             stack = action == 3 ? dealPlayerCards(2, stack) : dealPlayerCards(4, stack);
             action = 2;
             moveToNextPlayer();
@@ -443,9 +434,7 @@ public class MinoCommonBlockEntity extends BaseContainerBlockEntity implements C
             postBlockUpdate();
             playSound(useOnContext, 0);
         } else if (shouldPlace()) {
-            //System.out.println("should place");
             if (validCard(stack)) {
-                //System.out.println("valid");
                 int cardId = getCurrentCardId(stack);
                 float degree = player.getViewYRot(0);
                 placeCard(cardId, (float) clickedPos.get(Direction.Axis.X),
@@ -479,7 +468,6 @@ public class MinoCommonBlockEntity extends BaseContainerBlockEntity implements C
             }
         } else if (shouldCheckColor()) {
             //System.out.println("should check clr");
-            CompoundTag tableNbt = getPersistentData();
             boolean has = containingColor(clr, stack);
             boolean challenge = chooseToChallenge(stack);
             if (has) {

@@ -14,57 +14,57 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class SoundHandler {
     public static final DeferredRegister<SoundEvent> SOUND_EVENT_DEFERRED_REGISTER =
-        DeferredRegister.create(
-            ForgeRegistries.SOUND_EVENTS,
-            TableGameMod.MODID);
+            DeferredRegister.create(
+                    ForgeRegistries.SOUND_EVENTS,
+                    TableGameMod.MODID);
     public static final RegistryObject<SoundEvent> shuffle =
-        SOUND_EVENT_DEFERRED_REGISTER.register("shuffle",
-                                               () -> SoundEvent.createFixedRangeEvent(
-                                                   new ResourceLocation(
-                                                       TableGameMod.MODID,
-                                                       "shuffle"),
-                                                   16));
+            SOUND_EVENT_DEFERRED_REGISTER.register("shuffle",
+                    () -> SoundEvent.createFixedRangeEvent(
+                            new ResourceLocation(
+                                    TableGameMod.MODID,
+                                    "shuffle"),
+                            16));
     public static final RegistryObject<SoundEvent> play_card =
-        SOUND_EVENT_DEFERRED_REGISTER.register("play_card",
-                                               () -> SoundEvent.createFixedRangeEvent(
-                                                   new ResourceLocation(
-                                                       TableGameMod.MODID,
-                                                       "play_card"),
-                                                   16));
-    
+            SOUND_EVENT_DEFERRED_REGISTER.register("play_card",
+                    () -> SoundEvent.createFixedRangeEvent(
+                            new ResourceLocation(
+                                    TableGameMod.MODID,
+                                    "play_card"),
+                            16));
+
     public static float[] soundVolume = {10,//0
-                                         6,//1
-                                         8,//2
-                                         0.3f,//3
-                                         1.5f,//4
-                                         10,//5
-                                         10,//6
-                                         10,//7
-                                         10,//8
-                                         0.3f,//9
-                                         5,};
-    
+            6,//1
+            0.5f,//2
+            0.3f,//3
+            1.5f,//4
+            10,//5
+            10,//6
+            10,//7
+            10,//8
+            0.3f,//9
+            5,};
+
     public static void playSound(UseOnContext useOnContext, int soundType) {
         Level level = useOnContext.getLevel();
         BlockPos blockPos = useOnContext.getClickedPos();
         playSound(level, blockPos, soundType);
     }
-    
+
     public static void playSound(Level level, BlockPos blockPos, int soundType) {
         SoundEvent[] soundEvents = {SoundEvents.EXPERIENCE_ORB_PICKUP,//0
-                                    SoundEvents.PLAYER_LEVELUP,//1
-                                    SoundEvents.ANVIL_FALL,//2
-                                    SoundEvents.ENDER_DRAGON_AMBIENT,//3
-                                    SoundEvents.ENDER_DRAGON_HURT,//4
-                                    SoundEvents.VILLAGER_NO,//5
-                                    SoundEvents.VILLAGER_AMBIENT,//6
-                                    shuffle.get(),//7
-                                    play_card.get(),//8
-                                    SoundEvents.PORTAL_TRAVEL,//9
-                                    SoundEvents.CAT_AMBIENT};
+                SoundEvents.PLAYER_LEVELUP,//1
+                SoundEvents.ANVIL_LAND,//2
+                SoundEvents.ENDER_DRAGON_AMBIENT,//3
+                SoundEvents.ENDER_DRAGON_HURT,//4
+                SoundEvents.VILLAGER_NO,//5
+                SoundEvents.VILLAGER_AMBIENT,//6
+                shuffle.get(),//7
+                play_card.get(),//8
+                SoundEvents.PORTAL_TRAVEL,//9
+                SoundEvents.CAT_AMBIENT};
         publicPlaySound(level, soundEvents[soundType], blockPos, soundVolume[soundType]);
     }
-    
+
     public static void publicPlaySound(Level level, SoundEvent soundEvent, BlockPos blockPos, float volume) {
         level.playSound(null, blockPos, soundEvent, SoundSource.PLAYERS, volume, 1f);
     }
