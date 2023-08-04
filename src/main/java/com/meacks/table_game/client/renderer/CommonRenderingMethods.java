@@ -36,7 +36,7 @@ public class CommonRenderingMethods {
             float rotation = tileEntityIn.displayCardR[i];
             int id = tileEntityIn.placedCardId[i + skippedNum];
             ItemStack stack = mino_card_shapes.get(id).get().getDefaultInstance();
-            if (i == numPlaced - 1) {
+            if (i == displayNum - 1) {
                 stack.enchant(Enchantments.ALL_DAMAGE_PROTECTION, 1);
                 if (random.nextFloat() > 0.99f) {
                     double x = tileEntityIn.displayCardX[i];

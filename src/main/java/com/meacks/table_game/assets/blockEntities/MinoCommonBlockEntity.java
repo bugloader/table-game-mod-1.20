@@ -35,7 +35,7 @@ import static com.meacks.table_game.assets.handlers.SoundHandler.playSound;
 import static com.meacks.table_game.assets.items.MinoHandCard.*;
 
 public class MinoCommonBlockEntity extends BaseContainerBlockEntity implements Container {
-    public static final int CARD_SIZE_LIMIT = 8000;
+    public static final int CARD_SIZE_LIMIT = 800;
     public final int DISPLAY_CARD_LIMIT;
     public int[] placedCardId = new int[CARD_SIZE_LIMIT];
     public int[] drawDeckLeftCardsNum = new int[CARD_TYPES_COUNT];
