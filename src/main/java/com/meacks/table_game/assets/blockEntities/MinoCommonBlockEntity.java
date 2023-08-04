@@ -88,7 +88,7 @@ public class MinoCommonBlockEntity extends BaseContainerBlockEntity implements C
     }
 
     public boolean validCatchUno(ItemStack stack) {
-        return getCurrentCardId(stack) == 0 && preShouldUno && !preUno;
+        return getCurrentCardId(stack) == 0 && preShouldUno && !preUno && preId != id;
     }
 
     public boolean chooseToChallenge(ItemStack stack) {
@@ -324,14 +324,14 @@ public class MinoCommonBlockEntity extends BaseContainerBlockEntity implements C
             postBlockUpdate();
             return;
         }
-        int[] cards = new int[depositNum];
+        int[] cards = new int[CARD_SIZE_LIMIT];
         numPlaced -= depositNum;
         for (int i = 0; i < DISPLAY_CARD_LIMIT; i++) {
             int temp = i + depositNum;
             drawDeckLeftCardsNum[placedCardId[temp]]++;
             cards[i] = placedCardId[temp];
         }
-        System.arraycopy(cards, 0, placedCardId, 0, depositNum);
+        placedCardId = cards;
         drawDeckNum = depositNum;
         postBlockUpdate();
         playSound(level, getBlockPos(), 7);
