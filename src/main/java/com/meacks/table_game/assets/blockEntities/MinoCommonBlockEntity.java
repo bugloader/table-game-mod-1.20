@@ -582,7 +582,7 @@ public class MinoCommonBlockEntity extends BaseContainerBlockEntity implements C
         nbt.putBoolean("preUno", preUno);
         //inventory
         ContainerHelper.saveAllItems(nbt, items);
-        System.out.println("nbt" + nbt.size());
+        //System.out.println("nbt" + nbt.size());
     }
 
 
