@@ -1,7 +1,6 @@
 package com.meacks.table_game.client.renderer;
 
 import com.meacks.table_game.assets.blockEntities.MinoLargeTableBlockEntity;
-import com.meacks.table_game.assets.handlers.ItemHandler;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
@@ -14,65 +13,35 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import static com.meacks.table_game.assets.handlers.ItemHandler.mino_large_table;
+import static com.meacks.table_game.assets.handlers.ItemHandler.mino_large_table_yellow;
 import static com.meacks.table_game.client.renderer.CommonRenderingMethods.*;
 
 public class MinoLargeTableRenderer implements BlockEntityRenderer<MinoLargeTableBlockEntity> {
-    
-    private final BlockEntityRendererProvider.Context context;
-    
+
     public MinoLargeTableRenderer(BlockEntityRendererProvider.Context context) {
-        this.context = context;
     }
-    
+
     @Override
-    public void render(@NotNull MinoLargeTableBlockEntity tileEntityIn,
-                       float partialTick,
-                       PoseStack poseStack,
-                       @NotNull MultiBufferSource bufferSource,
-                       int combinedLight,
-                       int combinedOverlay) {
+    public void render(@NotNull MinoLargeTableBlockEntity tileEntityIn, float partialTick, PoseStack poseStack,
+                       @NotNull MultiBufferSource bufferSource, int combinedLight, int combinedOverlay) {
         poseStack.pushPose();
-        ItemRenderer itemRenderer = Minecraft.getInstance()
-                                             .getItemRenderer();
-        ItemStack stack;
-        if (tileEntityIn.getUpdateTag()
-                        .getBoolean("inGame")) {
-            stack = new ItemStack(ItemHandler.mino_large_table.get());
-        } else {
-            stack = new ItemStack(ItemHandler.mino_large_table_yellow.get());
-        }
+        ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
+        ItemStack stack = new ItemStack((tileEntityIn.inGame ? mino_large_table : mino_large_table_yellow).get());
         BakedModel bakedmodel = itemRenderer.getModel(stack, null, null, 0);
         poseStack.mulPose(Axis.YP.rotationDegrees(180f));
         poseStack.translate(-0.5f, 0.5f, -0.5f);
-        itemRenderer.render(stack,
-                            ItemDisplayContext.FIXED,
-                            true,
-                            poseStack,
-                            bufferSource,
-                            combinedLight,
-                            combinedOverlay,
-                            bakedmodel);
+        itemRenderer.render(stack, ItemDisplayContext.FIXED, true, poseStack, bufferSource,
+                combinedLight, combinedOverlay, bakedmodel);
         poseStack.popPose();
-        renderingPlacedCards(tileEntityIn,
-                             poseStack,
-                             bufferSource,
-                             itemRenderer,
-                             combinedLight,
-                             combinedOverlay,
-                             MinoLargeTableBlockEntity.RENDERING_CARD_NUM);
-        renderingDeck(tileEntityIn, poseStack, bufferSource, itemRenderer, combinedLight, combinedOverlay);
-        renderingDepositDeck(tileEntityIn,
-                             poseStack,
-                             bufferSource,
-                             itemRenderer,
-                             combinedLight,
-                             combinedOverlay,
-                             MinoLargeTableBlockEntity.RENDERING_CARD_NUM);
+        renderingPlacedCards(tileEntityIn, poseStack, bufferSource, itemRenderer, combinedLight, combinedOverlay);
+        renderingDrawDeck(tileEntityIn, poseStack, bufferSource, itemRenderer, combinedLight, combinedOverlay);
+        renderingDepositDeck(tileEntityIn, poseStack, bufferSource, itemRenderer, combinedLight, combinedOverlay);
     }
-    
+
     @Override
     public boolean shouldRenderOffScreen(@NotNull MinoLargeTableBlockEntity tileEntityIn) {
         return false;
     }
-    
+
 }

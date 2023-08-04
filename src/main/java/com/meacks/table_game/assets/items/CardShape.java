@@ -14,22 +14,19 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class CardShape extends Item {
-    
+
     public CardShape() {
         super(new Properties().stacksTo(1));
     }
-    
+
     @Override
-    public void appendHoverText(@NotNull ItemStack stack,
-                                @Nullable Level level,
-                                @NotNull List<Component> list,
-                                @NotNull TooltipFlag flag) {
-        if (!stack.is(ItemHandler.mino_card_shapes.get(0)
-                                                  .get())) {
+    public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level,
+                                @NotNull List<Component> list, @NotNull TooltipFlag flag) {
+        if (!stack.is(ItemHandler.mino_card_shapes.get(0).get())) {
             CompoundTag nbt = stack.getOrCreateTag();
             list.add(Component.translatable("table_game.text.won_from_game", Integer.toHexString(nbt.getInt("pwd"))));
             list.add(Component.translatable("table_game.text.won_time", nbt.getString("time"))
-                              .withStyle(ChatFormatting.AQUA));
+                    .withStyle(ChatFormatting.AQUA));
         }
         super.appendHoverText(stack, level, list, flag);
     }

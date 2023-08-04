@@ -27,45 +27,33 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ItemInHandRenderer.class)
 public abstract class MixinsItemInHandRenderer {
-    
+
     @Final
     @Shadow
     private Minecraft minecraft;
-    
+
     @Inject(at = @At(value = "HEAD"),
             method = "Lnet/minecraft/client/renderer/ItemInHandRenderer;renderArmWithItem" +
-                     "(Lnet/minecraft/client/player/AbstractClientPlayer;FFLnet/minecraft/world/InteractionHand;" +
-                     "FLnet/minecraft/world/item/ItemStack;FLcom/mojang/blaze3d/vertex/PoseStack;" +
-                     "Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
+                    "(Lnet/minecraft/client/player/AbstractClientPlayer;FFLnet/minecraft/world/InteractionHand;" +
+                    "FLnet/minecraft/world/item/ItemStack;FLcom/mojang/blaze3d/vertex/PoseStack;" +
+                    "Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
             cancellable = true)
-    private void renderArmWithItem(AbstractClientPlayer p_109372_,
-                                   float p_109373_,
-                                   float p_109374_,
-                                   InteractionHand p_109375_,
-                                   float p_109376_,
-                                   ItemStack p_109377_,
-                                   float p_109378_,
-                                   PoseStack p_109379_,
-                                   MultiBufferSource p_109380_,
-                                   int p_109381_,
-                                   CallbackInfo ci) {
+    private void renderArmWithItem(AbstractClientPlayer p_109372_, float p_109373_, float p_109374_,
+                                   InteractionHand p_109375_, float p_109376_, ItemStack p_109377_,
+                                   float p_109378_, PoseStack p_109379_, MultiBufferSource p_109380_,
+                                   int p_109381_, CallbackInfo ci) {
         if (!p_109372_.isScoping()) {
             boolean flag = p_109375_ == InteractionHand.MAIN_HAND;
             HumanoidArm humanoidarm = flag ? p_109372_.getMainArm() : p_109372_.getMainArm()
-                                                                               .getOpposite();
+                    .getOpposite();
             if (p_109377_.is(ItemHandler.mino_hand_card.get())) {
-                this.table_game_mod_1_20$renderOneHandedMap(p_109379_,
-                                                            p_109380_,
-                                                            p_109381_,
-                                                            p_109378_,
-                                                            humanoidarm,
-                                                            p_109376_,
-                                                            p_109377_);
+                this.table_game_mod_1_20$renderOneHandedMap(
+                        p_109379_, p_109380_, p_109381_, p_109378_, humanoidarm, p_109376_, p_109377_);
                 ci.cancel();
             }
         }
     }
-    
+
     @Unique
     private void table_game_mod_1_20$renderOneHandedMap(PoseStack p_109354_,
                                                         MultiBufferSource p_109355_,
@@ -83,7 +71,7 @@ public abstract class MixinsItemInHandRenderer {
             this.renderPlayerArm(p_109354_, p_109355_, p_109356_, p_109357_, p_109359_, p_109358_);
             p_109354_.popPose();
         }
-        
+
         p_109354_.pushPose();
         p_109354_.translate(f * 0.51F, -0.08F + p_109357_ * -1.2F, -0.75F);
         float f1 = Mth.sqrt(p_109359_);
@@ -97,7 +85,7 @@ public abstract class MixinsItemInHandRenderer {
         this.table_game_mod_1_20$renderCard(p_109354_, p_109355_, p_109356_, p_109360_);
         p_109354_.popPose();
     }
-    
+
     @Shadow
     private void renderPlayerArm(PoseStack p_109347_,
                                  MultiBufferSource p_109348_,
@@ -107,7 +95,7 @@ public abstract class MixinsItemInHandRenderer {
                                  HumanoidArm p_109352_) {
         throw new IllegalStateException("Mixin failed to shadow renderPlayerArm()");
     }
-    
+
     //Main implementation
     @Unique
     private void table_game_mod_1_20$renderCard(PoseStack p_109367_,
@@ -120,29 +108,29 @@ public abstract class MixinsItemInHandRenderer {
         //p_109367_.translate(0F, 0F, 0.0F);
         p_109367_.scale(0.0078125F, 0.0078125F, 0.0078125F);
         VertexConsumer vertexconsumer =
-            p_109368_.getBuffer(RenderType.text(new ResourceLocation(MinoHandCard.getCurrentCardTexture(
-            p_109370_))));
+                p_109368_.getBuffer(RenderType.text(new ResourceLocation(MinoHandCard.getCurrentCardTexture(
+                        p_109370_))));
         Matrix4f matrix4f = p_109367_.last()
-                                     .pose();
+                .pose();
         vertexconsumer.vertex(matrix4f, -7.0F, 135.0F, 0.0F)
-                      .color(255, 255, 255, 255)
-                      .uv(0.0F, 1.0F)
-                      .uv2(p_109369_)
-                      .endVertex();
+                .color(255, 255, 255, 255)
+                .uv(0.0F, 1.0F)
+                .uv2(p_109369_)
+                .endVertex();
         vertexconsumer.vertex(matrix4f, 135.0F, 135.0F, 0.0F)
-                      .color(255, 255, 255, 255)
-                      .uv(1.0F, 1.0F)
-                      .uv2(p_109369_)
-                      .endVertex();
+                .color(255, 255, 255, 255)
+                .uv(1.0F, 1.0F)
+                .uv2(p_109369_)
+                .endVertex();
         vertexconsumer.vertex(matrix4f, 135.0F, -7.0F, 0.0F)
-                      .color(255, 255, 255, 255)
-                      .uv(1.0F, 0.0F)
-                      .uv2(p_109369_)
-                      .endVertex();
+                .color(255, 255, 255, 255)
+                .uv(1.0F, 0.0F)
+                .uv2(p_109369_)
+                .endVertex();
         vertexconsumer.vertex(matrix4f, -7.0F, -7.0F, 0.0F)
-                      .color(255, 255, 255, 255)
-                      .uv(0.0F, 0.0F)
-                      .uv2(p_109369_)
-                      .endVertex();
+                .color(255, 255, 255, 255)
+                .uv(0.0F, 0.0F)
+                .uv2(p_109369_)
+                .endVertex();
     }
 }
