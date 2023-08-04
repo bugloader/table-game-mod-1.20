@@ -390,6 +390,7 @@ public class MinoCommonBlockEntity extends BaseContainerBlockEntity implements C
                 action = 2;
                 clr = getCardColor(id);
                 moveToNextPlayer();
+                moveToNextPlayer();
                 playSound(useOnContext, 0);
             }
         }
