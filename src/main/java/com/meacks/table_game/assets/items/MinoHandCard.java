@@ -12,6 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -19,6 +20,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.scores.Scoreboard;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -269,6 +271,13 @@ public class MinoHandCard extends Item {
         stack.setTag(nbt);
         stack.setHoverName(Component.translatable(MINO_CARD_TRANS_PREFIX + getCurrentCardName(stack))
                 .append(Component.translatable("table_game.text.comma_id", nbt.getInt("id"))));
+    }
+
+    @Override
+    public void inventoryTick(ItemStack stack, Level level, Entity entity, int p_41407_, boolean p_41408_) {
+        //Scoreboard scoreboard = new Scoreboard();
+        //scoreboard.getPlayersTeam();
+
     }
 
 }

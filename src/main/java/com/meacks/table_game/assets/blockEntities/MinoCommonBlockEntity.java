@@ -6,6 +6,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -23,9 +26,11 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
 
@@ -162,6 +167,11 @@ public class MinoCommonBlockEntity extends BaseContainerBlockEntity implements C
         assert nbt != null;
         nbt.putInt("pwd", pwd);
         nbt.putInt("id", id);
+        ListTag listTag = new ListTag();
+        listTag.add(StringTag.valueOf("table_game:mino_table"));
+        listTag.add(StringTag.valueOf("table_game:mino_large_table"));
+        listTag.add(StringTag.valueOf("table_game:mino_table_extender"));
+        nbt.put("CanPlaceOn", listTag);
         itemStack.setTag(nbt);
         id = action == 0 ? id + 1 : 0;
         postBlockUpdate();
@@ -474,7 +484,7 @@ public class MinoCommonBlockEntity extends BaseContainerBlockEntity implements C
                 if (challenge) {
                     id = preId;
                     action = 4;
-                    playSound(useOnContext, 2);
+                    playSound(useOnContext, 1);
                 } else {
                     action = 2;
                     playSound(useOnContext, 0);
@@ -482,7 +492,7 @@ public class MinoCommonBlockEntity extends BaseContainerBlockEntity implements C
             } else {
                 if (challenge) {
                     stack = dealPlayerCards(6, stack);
-                    playSound(useOnContext, 1);
+                    playSound(level, getBlockPos(), 2);
                 } else {
                     stack = dealPlayerCards(4, stack);
                     playSound(useOnContext, 0);
