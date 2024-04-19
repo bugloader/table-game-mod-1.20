@@ -27,14 +27,11 @@ public class CreativeTabHandler {
                                                 //output.accept(ItemHandler.small_game_table.get());
                                                 // Add the example item to the tab. For your own
                                                 // tabs, this method is preferred over the event
-                                                output.accept(
-                                                    ItemHandler.mino_hand_card.get());
-                                                output.accept(
-                                                    ItemHandler.mino_table.get());
-                                                output.accept(
-                                                    ItemHandler.mino_large_table.get());
-                                                output.accept(
-                                                    ItemHandler.mino_table_extender.get());
+                                                output.accept(ItemHandler.mino_hand_card.get());
+                                                output.accept(ItemHandler.mino_control_card.get());
+                                                output.accept(ItemHandler.mino_table.get());
+                                                output.accept(ItemHandler.mino_large_table.get());
+                                                output.accept(ItemHandler.mino_table_extender.get());
                                             })
                                         .build());
 }

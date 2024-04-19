@@ -2,6 +2,7 @@ package com.meacks.table_game.assets.handlers;
 
 import com.meacks.table_game.TableGameMod;
 import com.meacks.table_game.assets.items.CardShape;
+import com.meacks.table_game.assets.items.MinoControlCard;
 import com.meacks.table_game.assets.items.MinoHandCard;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -32,6 +33,7 @@ public class ItemHandler {
     public static final RegistryObject<Item> mino_table_extender = blockItem(BlockHandler.mino_table_extender,
                                                                              "mino_table_extender");
     public static final RegistryObject<Item> mino_hand_card = item(MinoHandCard::new, "mino_hand_card");
+    public static final RegistryObject<Item> mino_control_card = item(MinoControlCard::new, "mino_control_card");
     public static final List<RegistryObject<Item>> mino_card_shapes = new ArrayList<>();
     
     public static RegistryObject<Item> blockItem(RegistryObject<Block> rBlock, String registryName) {

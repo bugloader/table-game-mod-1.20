@@ -4,9 +4,11 @@
   "block.table_game.mino_table_extender": "Mino Table Extender",
   "block.table_game.small_game_table": "Small Game Table",
   "container.mino_game_table": "Mino Game Deck Config",
+  "container.mino_control": "Mino Control Card",
   "item.table_game.mino_hand_card": "Mino Hand",
   "itemGroup.table_game_tab": "Table Game Collections",
   "item.table_game.mino": "Mino",
+  "item.table_game.mino_control_card": "Mino Control Card",
   "item.table_game.mino-creeper-0": "Creeper 0",
   "item.table_game.mino-creeper-1": "Creeper 1",
   "item.table_game.mino-creeper-2": "Creeper 2",
@@ -65,5 +67,15 @@
   "table_game.text.won_from_game": "Won From Game: %s",
   "table_game.text.won_time": "At Time: %s",
   "table_game.text.comma_id": ", ID: %s",
-  "table_game.text.comma_player": ", Player: %s"
+  "table_game.text.comma_player": ", Player: %s",
+  "container.mino_control.creeper_set": "CreeperSet",
+  "container.mino_control.diamond_set": "DiamondSet",
+  "container.mino_control.ocelot_set": "OcelotSet",
+  "container.mino_control.redstone_set": "RedstoneSet",
+  "container.mino_control.skip_set": "SkipSet",
+  "container.mino_control.reverse_set": "ReverseSet",
+  "container.mino_control.draw2_set": "Draw2Set",
+  "container.mino_control.draw4_set": "Draw4Set",
+  "container.mino_control.wild_set": "WildSet",
+  "container.mino_control.people_size": "PeopleSize"
 }
