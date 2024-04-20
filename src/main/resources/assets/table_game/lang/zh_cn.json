@@ -6,11 +6,11 @@
   "container.mino_control": "Mino 控制卡牌",
   "container.mino_control.creeper_set": "绿色",
   "container.mino_control.diamond_set": "蓝色",
-  "container.mino_control.ocelot_set": "黄色",
-  "container.mino_control.redstone_set": "红色",
   "container.mino_control.draw2_set": "拿2张",
   "container.mino_control.draw4_set": "拿4张",
+  "container.mino_control.ocelot_set": "黄色",
   "container.mino_control.people_size": "玩家数量",
+  "container.mino_control.redstone_set": "红色",
   "container.mino_control.reverse_set": "反转卡",
   "container.mino_control.skip_set": "跳过卡",
   "container.mino_control.wild_set": "换色卡",
@@ -76,6 +76,8 @@
   "table_game.gui.mino_table.start": "开始游戏",
   "table_game.text.comma_id": ", ID: %s",
   "table_game.text.comma_player": ", 玩家: %s",
+  "table_game.text.current_player_id": "需要出牌玩家ID",
+  "table_game.text.player_id": "玩家ID",
   "table_game.text.won_from_game": "赢自游戏: %s",
   "table_game.text.won_time": "奖励时间: %s"
 }
