@@ -54,7 +54,7 @@ public class MinoCommonBlockEntity extends BaseContainerBlockEntity implements C
     public int drawDeckNum;
     public int action;
     public int pwd;
-    public static int id;
+    public int id;
     public int preId;
     public int dir;
     public int clr;
@@ -561,13 +561,15 @@ public class MinoCommonBlockEntity extends BaseContainerBlockEntity implements C
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, MinoCommonBlockEntity entity) {
-        entity.count += 1;
+        if (entity.inGame) {
+            entity.count += 1;
+        }
         if (entity.count > 40) {
             entity.count = 0;
             if (level != null && !level.isClientSide()) {
                 List<ServerPlayer> list = getNearbyPlayers((ServerLevel) level,pos);
                 for(ServerPlayer player : list) {
-                    player.connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("table_game.text.current_player_id").append(" : ").append(String.valueOf(id))));
+                    player.connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("table_game.text.current_player_id").append(" : ").append(String.valueOf(entity.id))));
                 }
             }
         }
