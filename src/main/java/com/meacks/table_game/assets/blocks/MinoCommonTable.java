@@ -1,15 +1,13 @@
 package com.meacks.table_game.assets.blocks;
 
 import com.meacks.table_game.assets.blockEntities.MinoCommonBlockEntity;
+import com.meacks.table_game.assets.handlers.BlockEntityHandler;
 import com.meacks.table_game.assets.handlers.ItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
@@ -18,6 +16,8 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
@@ -84,6 +84,12 @@ public class MinoCommonTable extends BaseEntityBlock {
     public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter blockGetter,
                                         @NotNull BlockPos pos, @NotNull CollisionContext collisionContext) {
         return shape;
+    }
+
+    @javax.annotation.Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> blockEntityType) {
+        return level.isClientSide() ? null : createTickerHelper(blockEntityType, BlockEntityHandler.minoTableBlockEntity.get(), MinoCommonBlockEntity::tick);
     }
 
     public static void tryStartGame(Level level, BlockPos blockPos) {

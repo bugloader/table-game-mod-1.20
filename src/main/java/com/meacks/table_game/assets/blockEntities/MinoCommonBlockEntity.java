@@ -8,31 +8,36 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.network.protocol.game.ClientboundSetActionBarTextPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import static com.meacks.table_game.TableGameMod.random;
 import static com.meacks.table_game.assets.handlers.ItemHandler.mino_card_shapes;
@@ -45,9 +50,18 @@ public class MinoCommonBlockEntity extends BaseContainerBlockEntity implements C
     public int[] placedCardId = new int[CARD_SIZE_LIMIT];
     public int[] drawDeckLeftCardsNum = new int[CARD_TYPES_COUNT];
     public float[] displayCardX, displayCardZ, displayCardR;
-    public int numPlaced, drawDeckNum, action, pwd, id, preId, dir, clr, peopleSize;
+    public int numPlaced;
+    public int drawDeckNum;
+    public int action;
+    public int pwd;
+    public static int id;
+    public int preId;
+    public int dir;
+    public int clr;
+    public int peopleSize;
     public boolean inGame, preShouldUno, preUno;
     private NonNullList<ItemStack> items = NonNullList.withSize(1, ItemStack.EMPTY);
+    private int count;
 
     public MinoCommonBlockEntity(BlockPos pos, BlockState state, int DISPLAY_CARD_LIMIT, BlockEntityType blockEntityType
     ) {
@@ -544,6 +558,25 @@ public class MinoCommonBlockEntity extends BaseContainerBlockEntity implements C
         CompoundTag compoundTag = new CompoundTag();
         this.saveAdditional(compoundTag);
         return compoundTag;
+    }
+
+    public static void tick(Level level, BlockPos pos, BlockState state, MinoCommonBlockEntity entity) {
+        entity.count += 1;
+        if (entity.count > 40) {
+            entity.count = 0;
+            if (level != null && !level.isClientSide()) {
+                List<ServerPlayer> list = getNearbyPlayers((ServerLevel) level,pos);
+                for(ServerPlayer player : list) {
+                    player.connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("table_game.text.current_player_id").append(" : ").append(String.valueOf(id))));
+                }
+            }
+        }
+    }
+
+    private static List<ServerPlayer> getNearbyPlayers(ServerLevel pLevel, BlockPos pPos) {
+        Vec3 vec3 = Vec3.atCenterOf(pPos);
+        Predicate<ServerPlayer> predicate = (player) -> player.position().closerThan(vec3, 4.0D);
+        return pLevel.getPlayers(predicate.and(LivingEntity::isAlive).and(EntitySelector.NO_SPECTATORS));
     }
 
     public void load(@NotNull CompoundTag nbt) {

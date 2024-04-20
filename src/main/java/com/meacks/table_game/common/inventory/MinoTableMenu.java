@@ -1,7 +1,7 @@
 package com.meacks.table_game.common.inventory;
 
+import com.meacks.table_game.assets.handlers.ItemHandler;
 import com.meacks.table_game.assets.handlers.MenuHandler;
-import com.meacks.table_game.assets.items.MinoControlCard;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -30,7 +30,7 @@ public class MinoTableMenu extends AbstractContainerMenu {
         this.addSlot(new Slot(container, 0, 9, 30){
             @Override
             public boolean mayPlace(@NotNull ItemStack pStack) {
-                return pStack.getItem() instanceof MinoControlCard;
+                return pStack.is(ItemHandler.mino_control_card.get());
             }
         });
         
