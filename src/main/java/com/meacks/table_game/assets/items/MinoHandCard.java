@@ -20,13 +20,13 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.scores.Scoreboard;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static com.meacks.table_game.assets.handlers.EntityHandler.summonFireWork;
 
@@ -92,8 +92,38 @@ public class MinoHandCard extends Item {
         return cardsList.get(index);
     }
 
+    public static int getCurrentCardIndex(ItemStack stack) {
+        ArrayList<Integer> cardsList = basicCardList();
+        CompoundTag nbt = stack.getOrCreateTag();
+        int index = nbt.getInt("index");
+        for (int i = 1; i < CARD_TYPES_COUNT; i++) {
+            int currentNum = nbt.getInt(Integer.toString(i));
+            if (currentNum != 0) cardsList.add(i);
+        }
+        if (index >= cardsList.size() || index < 0) {
+            nbt.putInt("index", 0);
+            index = 0;
+            stack.setTag(nbt);
+        }
+        return index;
+    }
+
+    public static ArrayList<Integer> getAllCardIds(ItemStack stack) {
+        ArrayList<Integer> cardsList = basicCardList();
+        CompoundTag nbt = stack.getOrCreateTag();
+        for (int i = 1; i < CARD_TYPES_COUNT; i++) {
+            int currentNum = nbt.getInt(Integer.toString(i));
+            if (currentNum != 0) cardsList.add(i);
+        }
+        return cardsList;
+    }
+
     public static String getCurrentCardName(ItemStack stack) {
         return getCardName(getCurrentCardId(stack));
+    }
+
+    public static ArrayList<String> getAllCardName(ItemStack stack) {
+        return getAllCardIds(stack).stream().map(MinoHandCard::getCardName).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public static ArrayList<Integer> basicCardList() {
@@ -152,6 +182,10 @@ public class MinoHandCard extends Item {
 
     public static String getCurrentCardTexture(ItemStack stack) {
         return RESOURCE_PATH_ROOT + getCurrentCardName(stack) + ".png";
+    }
+
+    public static ArrayList<String> getAllCardTexture(ItemStack stack) {
+        return getAllCardName(stack).stream().map(string -> RESOURCE_PATH_ROOT + string + ".png").collect(Collectors.toCollection(ArrayList::new));
     }
 
     //testing methods
